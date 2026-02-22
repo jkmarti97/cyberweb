@@ -16,6 +16,10 @@
 # Local dev server artifacts
 *.log
 
+# Source documents — keep local only
+*.docx
+*.pdf
+
 # Secrets — never commit these
 .env
 .env.*
