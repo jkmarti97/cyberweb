@@ -63,12 +63,12 @@
     var nameEl = document.createElement('h3');
     nameEl.className = 'team-name gradient-text';
     nameEl.textContent = member.name;
-    card.appendChild(nameEl);
+    avatarWrap.appendChild(nameEl);
 
     var titleEl = document.createElement('p');
     titleEl.className = 'team-title';
     titleEl.textContent = member.title || '';
-    card.appendChild(titleEl);
+    avatarWrap.appendChild(titleEl);
 
     /* ── Bio with truncation ── */
     var bioText = (member.bio || '').trim();
@@ -79,7 +79,7 @@
       var bioEl = document.createElement('p');
       bioEl.className = 'team-bio';
       bioEl.id = 'bio-' + member.name.replace(/\s+/g, '-').toLowerCase();
-      bioEl.textContent = bioText;
+      bioEl.innerText = bioText;
       bioWrap.appendChild(bioEl);
 
       // Add "Read more" toggle after paint so we can measure line count
