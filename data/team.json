@@ -1,23 +1,16 @@
 [
   {
-    "name": "Alexandra Reed",
-    "title": "Founder & CEO",
-    "bio": "Alexandra brings 20 years of regulatory and cybersecurity leadership from the OCC, where she served as a senior examiner overseeing cybersecurity assessments at Tier 1 and Tier 2 financial institutions. She founded CyberClean after observing the same repeat findings cycle at institution after institution — not from lack of effort, but from symptom-focused remediation that never addressed root causes. Her mission is to make sustainable, regulator-credible cybersecurity achievable for every institution under examination pressure.",
-    "headshot": "assets/headshots/alexandra-reed.jpg",
-    "linkedin": "https://linkedin.com/in/alexandra-reed"
+    "name": "Linda Chandler",
+    "title": "",
+    "bio": "Linda J. Chandler is a seasoned technology, risk, and cybersecurity leader with more than twenty-five years of experience across the financial services, technology, and consulting sectors. Based in the San Francisco Bay Area, she has established a professional identity centered on bridging the gap between complex technical requirements and enterprise-level strategic goals. Her career includes significant leadership roles at prominent institutions such as Bank of the West, Wells Fargo, and Circle Internet Financial. Throughout these tenures, she has specialized in developing robust frameworks for cyber risk management, operational resilience, and third-party oversight within highly regulated global environments.\n\nHer extensive background in leadership is characterized by a proven ability to manage large-scale global teams and navigate diverse corporate cultures. As a Senior Vice President and IT Risk Officer, she led an agile organization of over one hundred professionals to mature cybersecurity capabilities and align technical operations with board-level risk appetites. Ms. Chandler has successfully directed multi-year strategic roadmaps, including the implementation of integrated governance, risk, and compliance platforms that provide real-time visibility into business continuity and emerging threats. Her expertise extends into the evolving landscape of digital assets, where she has designed enterprise risk management programs specifically tailored for the crypto and stablecoin industry.\n\nToday, she provides high-level advisory services to large regional banks and data technology firms, focusing on upgrading security controls and information security programs to meet international standards. Her approach combines deep technical knowledge from her background in computer science with the strategic business acumen gained through an MBA from The Wharton School. By aligning cybersecurity hygiene with business objectives, she ensures that organizations can pursue growth ambitions while maintaining a proactive defense against systemic risks. Ms. Chandler remains a vital asset to firms seeking to enhance their digital trust, regulatory compliance, and long-term operational stability in an increasingly complex global marketplace.",
+    "headshot": "assets/headshots/IMAGE_6005.PNG",
+    "linkedin": ""
   },
   {
-    "name": "Marcus Chen",
-    "title": "Chief Delivery Officer",
+    "name": "Jeff Martin",
+    "title": "",
     "bio": "Marcus is a veteran of large-scale GRC transformations at Fortune 500 financial institutions. Prior to CyberClean, he led a 3-year consent order remediation program at a top-10 regional bank, building the evidence collection infrastructure and control monitoring frameworks that achieved full regulatory closure. He designed the CyberClean sprint-based delivery model and owns our methodology standards across all five modules.",
     "headshot": "assets/headshots/marcus-chen.jpg",
-    "linkedin": "https://linkedin.com/in/marcus-chen"
-  },
-  {
-    "name": "Dr. Priya Nair",
-    "title": "Head of Risk & Compliance",
-    "bio": "Priya holds a doctorate in information security risk management and has spent 15 years advising financial institutions on regulatory compliance frameworks including NIST CSF, FFIEC CAT, and PCI DSS. She leads CyberClean's diagnostic methodology — the root cause analysis, control gap mapping, and risk-based prioritization that forms the foundation of every engagement. Her work ensures that every remediation plan is defensible to examiners and genuinely addresses systemic control weaknesses.",
-    "headshot": "assets/headshots/priya-nair.jpg",
     "linkedin": ""
   }
 ]
