@@ -21,6 +21,9 @@ CLAUDE.md
 *.docx
 *.pdf
 
+# Custom domain — not live yet; remove this line when ready to deploy
+CNAME
+
 # Secrets — never commit these
 .env
 .env.*
