@@ -1,0 +1,22 @@
+# Claude Code local settings
+.claude/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local dev server artifacts
+*.log
+
+# Secrets — never commit these
+.env
+.env.*
+secrets.*

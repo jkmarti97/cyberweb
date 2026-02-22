@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Alexandra Reed",
+    "title": "Founder & CEO",
+    "bio": "Alexandra brings 20 years of regulatory and cybersecurity leadership from the OCC, where she served as a senior examiner overseeing cybersecurity assessments at Tier 1 and Tier 2 financial institutions. She founded CyberClean after observing the same repeat findings cycle at institution after institution — not from lack of effort, but from symptom-focused remediation that never addressed root causes. Her mission is to make sustainable, regulator-credible cybersecurity achievable for every institution under examination pressure.",
+    "headshot": "assets/headshots/alexandra-reed.jpg",
+    "linkedin": "https://linkedin.com/in/alexandra-reed"
+  },
+  {
+    "name": "Marcus Chen",
+    "title": "Chief Delivery Officer",
+    "bio": "Marcus is a veteran of large-scale GRC transformations at Fortune 500 financial institutions. Prior to CyberClean, he led a 3-year consent order remediation program at a top-10 regional bank, building the evidence collection infrastructure and control monitoring frameworks that achieved full regulatory closure. He designed the CyberClean sprint-based delivery model and owns our methodology standards across all five modules.",
+    "headshot": "assets/headshots/marcus-chen.jpg",
+    "linkedin": "https://linkedin.com/in/marcus-chen"
+  },
+  {
+    "name": "Dr. Priya Nair",
+    "title": "Head of Risk & Compliance",
+    "bio": "Priya holds a doctorate in information security risk management and has spent 15 years advising financial institutions on regulatory compliance frameworks including NIST CSF, FFIEC CAT, and PCI DSS. She leads CyberClean's diagnostic methodology — the root cause analysis, control gap mapping, and risk-based prioritization that forms the foundation of every engagement. Her work ensures that every remediation plan is defensible to examiners and genuinely addresses systemic control weaknesses.",
+    "headshot": "assets/headshots/priya-nair.jpg",
+    "linkedin": ""
+  }
+]

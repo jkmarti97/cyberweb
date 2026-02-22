@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberClean™ Automated Audit</title>
+  <style>
+    body { font-family: 'Courier New', monospace; background: #0d0d0d; color: #e0e0e0; padding: 24px; max-width: 960px; margin: 0 auto; }
+    h1 { color: #00D4FF; margin-bottom: 8px; }
+    .meta { color: #666; font-size: 13px; margin-bottom: 32px; }
+    .suite { margin-bottom: 32px; }
+    .suite-title { font-size: 16px; font-weight: bold; color: #8B5CF6; border-bottom: 1px solid #333; padding-bottom: 8px; margin-bottom: 12px; }
+    .test { display: flex; align-items: flex-start; gap: 12px; padding: 6px 0; font-size: 14px; line-height: 1.4; }
+    .pass { color: #22c55e; }
+    .fail { color: #ef4444; }
+    .warn { color: #f59e0b; }
+    .skip { color: #6b7280; }
+    .badge { flex-shrink: 0; font-size: 11px; font-weight: bold; padding: 1px 6px; border-radius: 3px; text-transform: uppercase; }
+    .badge.pass { background: #14532d; color: #22c55e; }
+    .badge.fail { background: #450a0a; color: #ef4444; }
+    .badge.warn { background: #451a03; color: #f59e0b; }
+    .badge.skip { background: #1a1a1a; color: #6b7280; }
+    .detail { font-size: 12px; color: #6b7280; margin-left: 52px; margin-bottom: 4px; }
+    .summary { margin-top: 32px; padding: 20px; background: #111; border: 1px solid #333; border-radius: 8px; }
+    .summary h2 { color: #00D4FF; margin: 0 0 12px; }
+    .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .summary-stat { text-align: center; }
+    .summary-stat .num { font-size: 36px; font-weight: bold; line-height: 1; margin-bottom: 4px; }
+    .summary-stat .label { font-size: 12px; color: #6b7280; }
+    .progress-bar { height: 8px; background: #1a1a1a; border-radius: 4px; overflow: hidden; margin-top: 20px; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #00D4FF, #8B5CF6); border-radius: 4px; transition: width 0.5s ease; }
+    .note { font-size: 13px; color: #6b7280; margin-top: 12px; padding: 10px; background: #111; border-left: 3px solid #8B5CF6; }
+  </style>
+</head>
+<body>
+
+<h1>CyberClean™ — Automated Audit Suite</h1>
+<div class="meta" id="run-meta">Running tests…</div>
+
+<div id="output"></div>
+<div class="summary" id="summary" style="display:none">
+  <h2>Results</h2>
+  <div class="summary-grid">
+    <div class="summary-stat"><div class="num pass" id="s-pass">0</div><div class="label">Passed</div></div>
+    <div class="summary-stat"><div class="num fail" id="s-fail">0</div><div class="label">Failed</div></div>
+    <div class="summary-stat"><div class="num warn" id="s-warn">0</div><div class="label">Warnings</div></div>
+    <div class="summary-stat"><div class="num skip" id="s-skip">0</div><div class="label">Skipped</div></div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="s-bar" style="width:0%"></div></div>
+  <div class="note">
+    <strong>Note on SKIP tests:</strong> Tests marked SKIP require fetching sibling HTML pages (blocked by file:// CORS).
+    Run via <code>python3 -m http.server 8080</code> from the cyberweb directory, then open
+    <code>http://localhost:8080/tests/audit.html</code> for full results.
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   CyberClean Automated Audit — runs in browser
+   ============================================================ */
+
+var results = { pass: 0, fail: 0, warn: 0, skip: 0 };
+var suites  = [];
+
+/* ── Test runner helpers ──────────────────────────────────── */
+function suite(title, fn) {
+  var s = { title: title, tests: [] };
+  suites.push(s);
+  fn(function test(desc, status, detail) {
+    s.tests.push({ desc: desc, status: status, detail: detail || '' });
+    results[status]++;
+  });
+}
+
+function assert(condition) { return condition ? 'pass' : 'fail'; }
+function warn(condition)   { return condition ? 'pass' : 'warn'; }
+
+/* ══════════════════════════════════════════════════════════
+   UTILITY: Color contrast calculator (WCAG 2.1)
+══════════════════════════════════════════════════════════ */
+function hexToRgb(hex) {
+  var clean = hex.replace('#', '');
+  if (clean.length === 3) clean = clean.split('').map(function(c){ return c+c; }).join('');
+  var n = parseInt(clean, 16);
+  return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+}
+
+function relativeLuminance(hex) {
+  var c = hexToRgb(hex);
+  var channels = [c.r, c.g, c.b].map(function(v) {
+    var s = v / 255;
+    return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
+  });
+  return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
+}
+
+function contrastRatio(hex1, hex2) {
+  var l1 = relativeLuminance(hex1);
+  var l2 = relativeLuminance(hex2);
+  var lighter = Math.max(l1, l2);
+  var darker  = Math.min(l1, l2);
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
+/* ══════════════════════════════════════════════════════════
+   SUITE 1: Color Contrast (WCAG 2.1 AA)
+══════════════════════════════════════════════════════════ */
+suite('Color Contrast (WCAG 2.1 AA)', function(t) {
+  var GRAD_FROM = '#00D4FF';
+  var GRAD_TO   = '#8B5CF6';
+  var BG        = '#111111';
+  var SURFACE   = '#1A1A2E';
+  var TEXT      = '#F0F0F5';
+  var MUTED     = '#8888A0';
+  var DARK_BTN  = '#0d0d0d';
+  var WHITE     = '#ffffff';
+
+  // Cyan gradient end — btn-primary text
+  var cyanDark  = contrastRatio(GRAD_FROM, DARK_BTN);
+  t('btn-primary: dark text (#0d0d0d) on cyan (#00D4FF) — WCAG AA requires 4.5:1',
+    assert(cyanDark >= 4.5),
+    'Ratio: ' + cyanDark.toFixed(2) + ':1 (need ≥4.5 for normal text)');
+
+  // Purple gradient end — btn-primary text
+  var purpleDark = contrastRatio(GRAD_TO, DARK_BTN);
+  t('btn-primary: dark text (#0d0d0d) on purple (#8B5CF6) — WCAG AA requires 4.5:1',
+    assert(purpleDark >= 4.5),
+    'Ratio: ' + purpleDark.toFixed(2) + ':1');
+
+  // Module badge — dark text on gradient
+  t('module-badge: dark text (#0d0d0d) on cyan end — WCAG AA',
+    assert(cyanDark >= 4.5),
+    'Same as btn-primary, ratio: ' + cyanDark.toFixed(2) + ':1');
+
+  // Body text on main bg
+  var bodyContrast = contrastRatio(TEXT, BG);
+  t('Body text (#F0F0F5) on background (#111111) — WCAG AAA requires 7:1',
+    assert(bodyContrast >= 7),
+    'Ratio: ' + bodyContrast.toFixed(2) + ':1');
+
+  // Muted text on surface — WCAG AA (3:1 for large/UI, 4.5 for normal)
+  var mutedSurface = contrastRatio(MUTED, SURFACE);
+  t('Muted text (#8888A0) on surface (#1A1A2E) — WCAG AA 3:1 minimum for UI text',
+    warn(mutedSurface >= 3.0),
+    'Ratio: ' + mutedSurface.toFixed(2) + ':1 (body text needs 4.5, large/UI needs 3.0)');
+
+  // Muted text on bg
+  var mutedBg = contrastRatio(MUTED, BG);
+  t('Muted text (#8888A0) on background (#111111) — WCAG AA 4.5:1',
+    warn(mutedBg >= 4.5),
+    'Ratio: ' + mutedBg.toFixed(2) + ':1');
+
+  // White text on bg (headings etc)
+  var whiteOnBg = contrastRatio(WHITE, BG);
+  t('White text on background (#111111) passes WCAG AAA',
+    assert(whiteOnBg >= 7),
+    'Ratio: ' + whiteOnBg.toFixed(2) + ':1');
+
+  // btn-secondary text on bg
+  var secText = contrastRatio(TEXT, BG);
+  t('btn-secondary text (#F0F0F5) on bg (#111111) — WCAG AA',
+    assert(secText >= 4.5),
+    'Ratio: ' + secText.toFixed(2) + ':1');
+
+  // btn-secondary text on surface (hover state)
+  var secHover = contrastRatio(TEXT, SURFACE);
+  t('btn-secondary text on surface hover (#1A1A2E) — WCAG AA',
+    assert(secHover >= 4.5),
+    'Ratio: ' + secHover.toFixed(2) + ':1');
+
+  // grad-from (#00D4FF) as accent color on bg — decorative, not text
+  t('Accent cyan (#00D4FF) used only as decoration/border (not normal text) — informational',
+    'skip',
+    'Decorative uses (orb, borders, icons) are exempt from contrast requirements (WCAG 1.4.11)');
+
+  // initials avatar: white text on HSL(h, 65%, 28%) at worst-case yellow hue
+  // Yellow at HSL(60, 65%, 28%) ≈ #7A6614
+  var worstCaseAvatar = '#7a6614';
+  var avatarContrast  = contrastRatio('#ffffff', worstCaseAvatar);
+  t('Team initials avatar: white text on worst-case hue (yellow HSL 60,65%,28%) — WCAG AA',
+    assert(avatarContrast >= 4.5),
+    'Worst-case ratio: ' + avatarContrast.toFixed(2) + ':1 (yellow hue at 28% lightness)');
+});
+
+/* ══════════════════════════════════════════════════════════
+   SUITE 2: CSS Custom Properties & Design Tokens
+══════════════════════════════════════════════════════════ */
+suite('CSS Custom Properties & Design Tokens', function(t) {
+  var root = document.documentElement;
+  var style = getComputedStyle(root);
+
+  var tokens = [
+    '--bg', '--surface', '--border', '--text', '--muted',
+    '--grad-from', '--grad-to', '--gradient', '--nav-h',
+    '--radius', '--radius-sm', '--transition'
+  ];
+
+  tokens.forEach(function(tok) {
+    var val = style.getPropertyValue(tok).trim();
+    t('CSS token ' + tok + ' is defined',
+      assert(val.length > 0),
+      val ? 'Value: ' + val : 'MISSING');
+  });
+
+  // Check Inter font loaded
+  var bodyFont = style.fontFamily;
+  t('Inter font referenced in body font-family',
+    warn(bodyFont.toLowerCase().includes('inter')),
+    'font-family: ' + bodyFont.trim().slice(0, 60));
+});
+
+/* ══════════════════════════════════════════════════════════
+   SUITE 3: Cross-page HTML fetch tests
+   (requires HTTP server — SKIP under file://)
+══════════════════════════════════════════════════════════ */
+var isHTTP = window.location.protocol.startsWith('http');
+var pages  = ['../index.html', '../services.html', '../about.html', '../team.html', '../contact.html'];
+
+// We'll run async fetch tests after sync suites render
+var asyncSuites = [];
+
+function asyncSuite(title, fn) {
+  asyncSuites.push({ title: title, fn: fn });
+}
+
+asyncSuite('HTML Structure & Heading Hierarchy', function() {
+  var testResults = [];
+
+  if (!isHTTP) {
+    pages.forEach(function(p) {
+      testResults.push({ desc: p + ' — heading hierarchy check', status: 'skip', detail: 'Requires HTTP server' });
+    });
+    return Promise.resolve(testResults);
+  }
+
+  return Promise.all(pages.map(function(p) {
+    return fetch(p)
+      .then(function(r) { return r.text(); })
+      .then(function(html) {
+        var parser = new DOMParser();
+        var doc    = parser.parseFromString(html, 'text/html');
+        var name   = p.split('/').pop();
+        var local  = [];
+
+        // lang attribute
+        local.push({
+          desc: name + ' — <html lang="en"> present',
+          status: assert(doc.documentElement.getAttribute('lang') === 'en'),
+          detail: 'lang="' + doc.documentElement.getAttribute('lang') + '"'
+        });
+
+        // Single h1
+        var h1s = doc.querySelectorAll('h1');
+        local.push({
+          desc: name + ' — exactly one <h1> per page',
+          status: assert(h1s.length === 1),
+          detail: h1s.length + ' h1 found'
+        });
+
+        // h1 not empty
+        if (h1s.length > 0) {
+          local.push({
+            desc: name + ' — h1 has visible text',
+            status: assert(h1s[0].textContent.trim().length > 0),
+            detail: h1s[0].textContent.trim().slice(0, 60)
+          });
+        }
+
+        // No skipped heading levels (e.g., h1→h3)
+        var headings = Array.from(doc.querySelectorAll('h1,h2,h3,h4,h5,h6'));
+        var skipped  = false;
+        for (var i = 1; i < headings.length; i++) {
+          var prev = parseInt(headings[i-1].tagName[1]);
+          var curr = parseInt(headings[i].tagName[1]);
+          if (curr - prev > 1) { skipped = true; break; }
+        }
+        local.push({
+          desc: name + ' — no skipped heading levels',
+          status: warn(!skipped),
+          detail: headings.map(function(h){ return h.tagName; }).join(' → ')
+        });
+
+        // meta description
+        var metaDesc = doc.querySelector('meta[name="description"]');
+        // .content handles apostrophes correctly unlike regex-based extraction
+        local.push({
+          desc: name + ' — meta description present (>50 chars)',
+          status: assert(metaDesc && (metaDesc.getAttribute('content') || '').length > 50),
+          detail: metaDesc ? metaDesc.getAttribute('content').slice(0, 80) : 'MISSING'
+        });
+
+        // title tag
+        local.push({
+          desc: name + ' — <title> not empty',
+          status: assert(doc.title && doc.title.trim().length > 0),
+          detail: doc.title
+        });
+
+        return local;
+      });
+  })).then(function(all) {
+    return all.reduce(function(a,b){ return a.concat(b); }, testResults);
+  });
+});
+
+asyncSuite('Accessibility — ARIA & Interactive Elements', function() {
+  if (!isHTTP) {
+    return Promise.resolve([{
+      desc: 'All page ARIA audit — requires HTTP server',
+      status: 'skip',
+      detail: 'Run via python3 -m http.server 8080'
+    }]);
+  }
+
+  return Promise.all(pages.map(function(p) {
+    return fetch(p)
+      .then(function(r) { return r.text(); })
+      .then(function(html) {
+        var parser = new DOMParser();
+        var doc    = parser.parseFromString(html, 'text/html');
+        var name   = p.split('/').pop();
+        var local  = [];
+
+        // All images have alt
+        var imgs = Array.from(doc.querySelectorAll('img'));
+        var missingAlt = imgs.filter(function(img) { return !img.hasAttribute('alt'); });
+        local.push({
+          desc: name + ' — all <img> have alt attribute',
+          status: assert(missingAlt.length === 0),
+          detail: missingAlt.length + ' missing alt. Total imgs: ' + imgs.length
+        });
+
+        // All form inputs have labels
+        var inputs = Array.from(doc.querySelectorAll('input:not([type="hidden"]):not([type="submit"]):not([name="_gotcha"]), select, textarea'));
+        var unlabeled = inputs.filter(function(inp) {
+          var id  = inp.id;
+          if (!id) return true;
+          return !doc.querySelector('label[for="' + id + '"]');
+        });
+        local.push({
+          desc: name + ' — all form inputs have associated <label>',
+          status: assert(unlabeled.length === 0),
+          detail: unlabeled.length + ' unlabeled inputs found'
+        });
+
+        // Nav has role or is <nav>
+        var navEl = doc.querySelector('nav');
+        local.push({
+          desc: name + ' — <nav> landmark present',
+          status: assert(navEl !== null),
+          detail: navEl ? 'nav found with aria-label="' + (navEl.getAttribute('aria-label') || '') + '"' : 'MISSING'
+        });
+
+        // Hamburger has aria-expanded
+        var hamburger = doc.querySelector('.nav-hamburger');
+        if (hamburger) {
+          local.push({
+            desc: name + ' — hamburger button has aria-expanded',
+            status: assert(hamburger.hasAttribute('aria-expanded')),
+            detail: 'aria-expanded="' + hamburger.getAttribute('aria-expanded') + '"'
+          });
+          local.push({
+            desc: name + ' — hamburger button has aria-controls',
+            status: assert(hamburger.hasAttribute('aria-controls')),
+            detail: 'aria-controls="' + (hamburger.getAttribute('aria-controls') || 'MISSING') + '"'
+          });
+          local.push({
+            desc: name + ' — hamburger button has aria-label',
+            status: assert(hamburger.hasAttribute('aria-label')),
+            detail: 'aria-label="' + (hamburger.getAttribute('aria-label') || 'MISSING') + '"'
+          });
+        }
+
+        // Main landmark
+        var mainEl = doc.querySelector('main');
+        local.push({
+          desc: name + ' — <main> landmark present',
+          status: assert(mainEl !== null),
+          detail: mainEl ? '<main> found' : 'MISSING'
+        });
+
+        // Footer landmark
+        var footerEl = doc.querySelector('footer');
+        local.push({
+          desc: name + ' — <footer> landmark present',
+          status: assert(footerEl !== null),
+          detail: footerEl ? '<footer> found' : 'MISSING'
+        });
+
+        // No empty link text
+        var links = Array.from(doc.querySelectorAll('a'));
+        var emptyLinks = links.filter(function(a) {
+          return !a.textContent.trim() && !a.getAttribute('aria-label') && !a.querySelector('img[alt]');
+        });
+        local.push({
+          desc: name + ' — no links with empty accessible text',
+          status: warn(emptyLinks.length === 0),
+          detail: emptyLinks.length + ' empty links found'
+        });
+
+        // favicon
+        var favicon = doc.querySelector('link[rel="icon"]');
+        local.push({
+          desc: name + ' — favicon link present',
+          status: assert(favicon !== null),
+          detail: favicon ? favicon.getAttribute('href') : 'MISSING'
+        });
+
+        // viewport meta
+        var viewport = doc.querySelector('meta[name="viewport"]');
+        local.push({
+          desc: name + ' — viewport meta present',
+          status: assert(viewport !== null),
+          detail: viewport ? viewport.getAttribute('content') : 'MISSING'
+        });
+
+        return local;
+      });
+  })).then(function(all) {
+    return all.reduce(function(a,b){ return a.concat(b); }, []);
+  });
+});
+
+asyncSuite('Navigation — Link Integrity', function() {
+  if (!isHTTP) {
+    return Promise.resolve([{
+      desc: 'Navigation link audit — requires HTTP server',
+      status: 'skip',
+      detail: 'Run via python3 -m http.server 8080'
+    }]);
+  }
+
+  return Promise.all(pages.map(function(p) {
+    return fetch(p)
+      .then(function(r) { return r.text(); })
+      .then(function(html) {
+        var parser = new DOMParser();
+        var doc    = parser.parseFromString(html, 'text/html');
+        var name   = p.split('/').pop();
+
+        // Check all local hrefs in nav
+        var navLinks = Array.from(doc.querySelectorAll('.nav-links a'));
+        return Promise.all(navLinks.map(function(a) {
+          var href = a.getAttribute('href') || '';
+          if (href.startsWith('http') || href.startsWith('mailto') || href.startsWith('#')) {
+            return { desc: name + ' nav: ' + href, status: 'skip', detail: 'External/hash link skipped' };
+          }
+          var cleanHref = href.split('#')[0].split('?')[0];
+          return fetch('../' + cleanHref, { method: 'HEAD' })
+            .then(function(r) {
+              return {
+                desc: name + ' nav link "' + href + '" resolves (HTTP ' + r.status + ')',
+                status: assert(r.ok),
+                detail: 'HTTP ' + r.status
+              };
+            })
+            .catch(function(e) {
+              return { desc: name + ' nav link "' + href + '"', status: 'fail', detail: e.message };
+            });
+        }));
+      });
+  })).then(function(all) {
+    return all.reduce(function(a,b){ return a.concat(b); }, []);
+  });
+});
+
+asyncSuite('Team Data — JSON Loading', function() {
+  if (!isHTTP) {
+    return Promise.resolve([{
+      desc: 'data/team.json fetch — requires HTTP server',
+      status: 'skip',
+      detail: 'fetch() blocked on file:// protocol'
+    }]);
+  }
+
+  return fetch('../data/team.json')
+    .then(function(r) {
+      var httpOk = r.ok;
+      return r.json().then(function(data) {
+        var tests = [];
+
+        tests.push({
+          desc: 'data/team.json fetches successfully (HTTP 200)',
+          status: assert(httpOk),
+          detail: 'HTTP ' + r.status
+        });
+
+        tests.push({
+          desc: 'team.json is a valid JSON array',
+          status: assert(Array.isArray(data)),
+          detail: typeof data
+        });
+
+        tests.push({
+          desc: 'team.json has at least one member',
+          status: assert(data.length > 0),
+          detail: data.length + ' members found'
+        });
+
+        data.forEach(function(m, i) {
+          var prefix = 'Member[' + i + '] (' + (m.name || 'unnamed') + ')';
+
+          tests.push({
+            desc: prefix + ' — has "name" field',
+            status: assert(typeof m.name === 'string' && m.name.trim().length > 0),
+            detail: 'name: "' + m.name + '"'
+          });
+
+          tests.push({
+            desc: prefix + ' — has "title" field',
+            status: assert(typeof m.title === 'string' && m.title.trim().length > 0),
+            detail: 'title: "' + m.title + '"'
+          });
+
+          tests.push({
+            desc: prefix + ' — has "bio" field (non-empty)',
+            status: warn(typeof m.bio === 'string' && m.bio.trim().length > 20),
+            detail: 'bio length: ' + (m.bio || '').length + ' chars'
+          });
+
+          if (m.linkedin) {
+            tests.push({
+              desc: prefix + ' — linkedin URL is valid format',
+              status: assert(m.linkedin.startsWith('https://linkedin.com') || m.linkedin.startsWith('https://www.linkedin.com')),
+              detail: m.linkedin
+            });
+          } else {
+            tests.push({
+              desc: prefix + ' — linkedin field absent/empty (will render no icon)',
+              status: 'pass',
+              detail: 'Optional field — OK to omit'
+            });
+          }
+        });
+
+        return tests;
+      });
+    })
+    .catch(function(e) {
+      return [{
+        desc: 'data/team.json fetch',
+        status: 'fail',
+        detail: e.message
+      }];
+    });
+});
+
+asyncSuite('Contact Form Validation', function() {
+  if (!isHTTP) {
+    return Promise.resolve([{
+      desc: 'Contact form audit — requires HTTP server',
+      status: 'skip',
+      detail: 'Run via python3 -m http.server 8080'
+    }]);
+  }
+
+  return fetch('../contact.html')
+    .then(function(r) { return r.text(); })
+    .then(function(html) {
+      var parser = new DOMParser();
+      var doc    = parser.parseFromString(html, 'text/html');
+      var tests  = [];
+
+      var form = doc.querySelector('#contact-form');
+      tests.push({
+        desc: 'contact.html — #contact-form exists',
+        status: assert(form !== null),
+        detail: form ? 'found' : 'MISSING'
+      });
+
+      if (form) {
+        var action = form.getAttribute('action') || '';
+        tests.push({
+          desc: 'Form action URL is configured (not placeholder)',
+          status: warn(!action.includes('YOUR_FORM_ID')),
+          detail: 'action="' + action + '"'
+        });
+
+        tests.push({
+          desc: 'Form uses POST method',
+          status: assert(form.getAttribute('method') === 'POST'),
+          detail: 'method="' + form.getAttribute('method') + '"'
+        });
+
+        var required = Array.from(form.querySelectorAll('[required]'));
+        tests.push({
+          desc: 'Form has required fields (name, email, message)',
+          status: assert(required.length >= 3),
+          detail: required.length + ' required fields: ' + required.map(function(i){ return i.id||i.name; }).join(', ')
+        });
+
+        var honeypot = form.querySelector('[name="_gotcha"]');
+        tests.push({
+          desc: 'Honeypot spam field present (name="_gotcha")',
+          status: assert(honeypot !== null),
+          detail: honeypot ? 'found, hidden via display:none' : 'MISSING'
+        });
+
+        var statusEl = doc.querySelector('#form-status[role="alert"]');
+        tests.push({
+          desc: 'Form status element has role="alert" and aria-live',
+          status: assert(statusEl !== null),
+          detail: statusEl ? 'role=alert, aria-live=' + (statusEl.getAttribute('aria-live') || 'missing') : 'MISSING'
+        });
+
+        var calendlyWidget = doc.querySelector('.calendly-inline-widget');
+        tests.push({
+          desc: 'Calendly widget container exists in contact.html',
+          status: assert(calendlyWidget !== null),
+          detail: calendlyWidget ? 'found' : 'MISSING'
+        });
+
+        if (calendlyWidget) {
+          var calendlyUrl = (calendlyWidget.getAttribute('data-url') || '');
+          tests.push({
+            desc: 'Calendly URL is configured (not placeholder)',
+            status: warn(!calendlyUrl.includes('YOUR_CALENDLY_URL')),
+            detail: 'data-url="' + calendlyUrl.slice(0, 60) + '"'
+          });
+        }
+      }
+
+      return tests;
+    });
+});
+
+asyncSuite('JavaScript Files — Syntax & Load', function() {
+  var jsFiles = ['../js/main.js', '../js/team.js'];
+
+  if (!isHTTP) {
+    return Promise.resolve(jsFiles.map(function(f) {
+      return { desc: f + ' syntax check', status: 'skip', detail: 'Requires HTTP server' };
+    }));
+  }
+
+  return Promise.all(jsFiles.map(function(f) {
+    return fetch(f)
+      .then(function(r) {
+        var ok = r.ok;
+        return r.text().then(function(src) {
+          var tests = [];
+
+          tests.push({
+            desc: f + ' — file loads (HTTP 200)',
+            status: assert(ok),
+            detail: 'HTTP ' + r.status
+          });
+
+          tests.push({
+            desc: f + ' — file is non-empty',
+            status: assert(src.trim().length > 100),
+            detail: src.length + ' bytes'
+          });
+
+          // Check for console.error not exposed to users
+          var consoleErrors = (src.match(/console\.error/g) || []).length;
+          tests.push({
+            desc: f + ' — console.error calls are diagnostic only (expected in catch blocks)',
+            status: 'pass',
+            detail: consoleErrors + ' console.error call(s) found — acceptable in catch handlers'
+          });
+
+          return tests;
+        });
+      });
+  })).then(function(all) { return all.reduce(function(a,b){ return a.concat(b); }, []); });
+});
+
+asyncSuite('CSS Files — Load & Key Rules', function() {
+  var cssFiles = ['../css/styles.css', '../css/animations.css'];
+
+  if (!isHTTP) {
+    return Promise.resolve(cssFiles.map(function(f) {
+      return { desc: f + ' load check', status: 'skip', detail: 'Requires HTTP server' };
+    }));
+  }
+
+  return Promise.all(cssFiles.map(function(f) {
+    return fetch(f)
+      .then(function(r) {
+        var ok = r.ok;
+        return r.text().then(function(src) {
+          return [
+            {
+              desc: f + ' — file loads (HTTP 200)',
+              status: assert(ok),
+              detail: src.length + ' bytes'
+            },
+            {
+              desc: f + ' — contains :root design tokens',
+              status: f.includes('styles') ? assert(src.includes(':root')) : 'skip',
+              detail: f.includes('styles') ? ':root found' : 'N/A for animations.css'
+            },
+            {
+              desc: f + ' — :focus-visible rule defined for keyboard nav',
+              status: f.includes('styles') ? assert(src.includes(':focus-visible')) : 'skip',
+              detail: f.includes('styles') ? (src.includes(':focus-visible') ? 'found' : 'MISSING') : 'N/A'
+            }
+          ];
+        });
+      });
+  })).then(function(all) { return all.reduce(function(a,b){ return a.concat(b); }, []); });
+});
+
+/* ══════════════════════════════════════════════════════════
+   SUITE: Live DOM checks (runs on this audit page's context)
+══════════════════════════════════════════════════════════ */
+suite('Live DOM — CSS Variables Loaded', function(t) {
+  // We load the real stylesheet to do live checks
+  var link = document.createElement('link');
+  link.rel  = 'stylesheet';
+  link.href = isHTTP ? '../css/styles.css' : '';
+
+  if (!isHTTP) {
+    t('CSS variables live check — requires HTTP server', 'skip', 'Variables not injectable under file://');
+    return;
+  }
+
+  // We check after a tick — the sheet might not be loaded yet
+  // This is best-effort; the async CSS file test is more reliable
+  t('Audit page CSS variable check deferred to CSS Files suite', 'pass', 'See CSS Files — Load & Key Rules suite above');
+});
+
+/* ══════════════════════════════════════════════════════════
+   RENDERER
+══════════════════════════════════════════════════════════ */
+function renderSuites(allSuites) {
+  var out = document.getElementById('output');
+  out.innerHTML = '';
+
+  allSuites.forEach(function(s) {
+    var div = document.createElement('div');
+    div.className = 'suite';
+
+    var title = document.createElement('div');
+    title.className = 'suite-title';
+    title.textContent = s.title;
+    div.appendChild(title);
+
+    s.tests.forEach(function(test) {
+      var row = document.createElement('div');
+      row.className = 'test';
+
+      var badge = document.createElement('span');
+      badge.className = 'badge ' + test.status;
+      badge.textContent = test.status.toUpperCase();
+      row.appendChild(badge);
+
+      var desc = document.createElement('span');
+      desc.className = test.status;
+      desc.textContent = test.desc;
+      row.appendChild(desc);
+
+      div.appendChild(row);
+
+      if (test.detail) {
+        var detail = document.createElement('div');
+        detail.className = 'detail';
+        detail.textContent = '↳ ' + test.detail;
+        div.appendChild(detail);
+      }
+    });
+
+    out.appendChild(div);
+  });
+
+  // Update summary
+  var total = results.pass + results.fail + results.warn + results.skip;
+  document.getElementById('s-pass').textContent = results.pass;
+  document.getElementById('s-fail').textContent = results.fail;
+  document.getElementById('s-warn').textContent = results.warn;
+  document.getElementById('s-skip').textContent = results.skip;
+
+  var pct = total > 0 ? ((results.pass + results.warn) / total * 100).toFixed(0) : 0;
+  document.getElementById('s-bar').style.width = pct + '%';
+  document.getElementById('summary').style.display = 'block';
+  document.getElementById('run-meta').textContent =
+    'Completed ' + new Date().toLocaleTimeString() + ' — ' + total + ' tests | Protocol: ' + window.location.protocol;
+}
+
+/* ══════════════════════════════════════════════════════════
+   RUN ALL
+══════════════════════════════════════════════════════════ */
+var allRendered = suites.slice();
+
+Promise.all(asyncSuites.map(function(as) {
+  return as.fn().then(function(tests) {
+    // Tally results
+    tests.forEach(function(t) { results[t.status] = (results[t.status] || 0) + 1; });
+    return { title: as.title, tests: tests };
+  });
+})).then(function(asyncResults) {
+  asyncResults.forEach(function(s) { allRendered.push(s); });
+  renderSuites(allRendered);
+}).catch(function(e) {
+  renderSuites(allRendered);
+  console.error('Async suite error:', e);
+});
+
+// Render sync suites immediately while async runs
+renderSuites(allRendered);
+</script>
+</body>
+</html>

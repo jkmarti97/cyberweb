@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services &amp; Methodology — CyberClean™</title>
+  <meta name="description" content="CyberClean's five-module methodology: from regulatory finding intake through sustainable BAU control monitoring. Evidence-driven remediation for financial institutions.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    /* ── Services-specific styles ── */
+    .module-section {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .module-section:last-of-type {
+      border-bottom: none;
+    }
+    .module-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .module-header-text h2 {
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .module-header-text .module-purpose {
+      color: var(--muted);
+      font-size: 17px;
+      max-width: 600px;
+    }
+    .module-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    .module-activities h4,
+    .module-outputs h4 {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .module-activities ul,
+    .module-outputs ul {
+      list-style: none;
+    }
+    .module-activities ul li,
+    .module-outputs ul li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 12px;
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--text);
+    }
+    .module-activities ul li::before {
+      content: '→';
+      color: var(--grad-from);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .module-outputs ul li::before {
+      content: '✓';
+      color: var(--grad-to);
+      flex-shrink: 0;
+      font-weight: 700;
+      margin-top: 1px;
+    }
+
+    /* ── Flow diagram ── */
+    .flow-section {
+      padding: 64px 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .flow-diagram {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0;
+      margin-top: 40px;
+    }
+    .flow-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      text-align: center;
+    }
+    .flow-node-badge {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .flow-node-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      max-width: 80px;
+    }
+    .flow-connector {
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      padding-bottom: 24px;
+      color: var(--grad-from);
+      font-size: 24px;
+      font-weight: 300;
+    }
+
+    /* ── Traceability callout ── */
+    .traceability-callout {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px 48px;
+      text-align: center;
+      margin: 64px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .traceability-callout::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: var(--radius);
+      background: var(--gradient);
+      z-index: -1;
+    }
+    .traceability-callout h3 {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .traceability-chain-display {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0;
+    }
+    .chain-item {
+      font-size: clamp(14px, 2vw, 18px);
+      font-weight: 700;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      white-space: nowrap;
+    }
+    .chain-sep {
+      color: var(--muted);
+      margin: 0 8px;
+      font-size: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .module-body {
+        grid-template-columns: 1fr;
+      }
+      .flow-connector {
+        transform: rotate(90deg);
+        padding: 12px 0;
+      }
+      .flow-diagram {
+        flex-direction: column;
+        gap: 0;
+      }
+      .traceability-callout {
+        padding: 32px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAV ══════════════════════════════════════════════ -->
+  <nav class="nav" id="main-nav" role="navigation" aria-label="Main navigation">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="CyberClean home">
+        <img src="assets/favicon.svg" alt="" class="nav-logo-icon" width="32" height="32">
+        <span class="nav-logo-text"><span class="brand">CyberClean</span>™</span>
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="services.html" class="active">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="team.html">Team</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li class="nav-cta"><a href="contact.html" class="btn btn-primary">Book a Call</a></li>
+      </ul>
+      <button class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ══ PAGE HEADER ══════════════════════════════════════ -->
+    <header class="page-header">
+      <div class="container">
+        <span class="section-label">Methodology</span>
+        <h1 class="section-title" data-reveal>The CyberClean Five-Module Framework</h1>
+        <p class="section-body" data-reveal data-delay="200">
+          An end-to-end remediation system designed for financial institutions under regulatory pressure. Every module produces verifiable outputs. Every output traces back to the original finding.
+        </p>
+      </div>
+    </header>
+
+    <!-- ══ FLOW DIAGRAM ══════════════════════════════════════ -->
+    <section class="flow-section" aria-label="Module flow overview">
+      <div class="container">
+        <h2 class="section-title" style="text-align:center" data-reveal>How the modules connect</h2>
+        <div class="flow-diagram" data-reveal data-delay="200" role="list" aria-label="Module sequence">
+          <div class="flow-node" role="listitem">
+            <div class="flow-node-badge">01</div>
+            <div class="flow-node-label">Regulatory Trigger</div>
+          </div>
+          <div class="flow-connector" aria-hidden="true">→</div>
+          <div class="flow-node" role="listitem">
+            <div class="flow-node-badge">02</div>
+            <div class="flow-node-label">Diagnose</div>
+          </div>
+          <div class="flow-connector" aria-hidden="true">→</div>
+          <div class="flow-node" role="listitem">
+            <div class="flow-node-badge">03</div>
+            <div class="flow-node-label">Design</div>
+          </div>
+          <div class="flow-connector" aria-hidden="true">→</div>
+          <div class="flow-node" role="listitem">
+            <div class="flow-node-badge">04</div>
+            <div class="flow-node-label">Deliver</div>
+          </div>
+          <div class="flow-connector" aria-hidden="true">→</div>
+          <div class="flow-node" role="listitem">
+            <div class="flow-node-badge">05</div>
+            <div class="flow-node-label">Sustain</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ MODULE SECTIONS ══════════════════════════════════ -->
+    <div class="container">
+
+      <!-- Module 1 -->
+      <section class="module-section" id="module-1" aria-labelledby="mod1-heading">
+        <div class="module-header" data-reveal>
+          <div class="module-badge module-badge--lg" aria-label="Module 1">01</div>
+          <div class="module-header-text">
+            <h2 id="mod1-heading">Regulatory Trigger</h2>
+            <p class="module-purpose">Ingest and scope regulatory findings to establish a structured, accountable foundation before any remediation work begins.</p>
+          </div>
+        </div>
+        <div class="module-body">
+          <div class="module-activities" data-reveal>
+            <h4>Key Activities</h4>
+            <ul>
+              <li>Parse and categorize MRA/MRIA language, consent order provisions, and audit findings</li>
+              <li>Map each finding to the applicable regulatory framework (FFIEC, NIST CSF, PCI DSS, etc.)</li>
+              <li>Assign 1LOD accountability and 2LOD oversight roles for each finding</li>
+              <li>Establish risk severity ratings and remediation timeline targets</li>
+              <li>Build the master findings register — the source of truth for all downstream work</li>
+            </ul>
+          </div>
+          <div class="module-outputs" data-reveal data-delay="200">
+            <h4>Outputs</h4>
+            <ul>
+              <li>Master Findings Register with risk classifications</li>
+              <li>1LOD/2LOD accountability matrix</li>
+              <li>Regulatory framework cross-reference mapping</li>
+              <li>Remediation timeline and milestone schedule</li>
+              <li>Board and Executive reporting baseline</li>
+            </ul>
+            <blockquote>
+              "The Board needs confidence that every regulatory finding has an owner, a deadline, and a credible plan — before a single control is touched."
+              <cite>— Module 1 Governance Principle</cite>
+            </blockquote>
+          </div>
+        </div>
+      </section>
+
+      <!-- Module 2 -->
+      <section class="module-section" id="module-2" aria-labelledby="mod2-heading">
+        <div class="module-header" data-reveal>
+          <div class="module-badge module-badge--lg" aria-label="Module 2">02</div>
+          <div class="module-header-text">
+            <h2 id="mod2-heading">Diagnose</h2>
+            <p class="module-purpose">Perform structured root cause analysis and control gap mapping so remediation targets actual systemic weaknesses — not their symptoms.</p>
+          </div>
+        </div>
+        <div class="module-body">
+          <div class="module-activities" data-reveal>
+            <h4>Key Activities</h4>
+            <ul>
+              <li>Structured root cause analysis using proven frameworks (5 Whys, fishbone, control failure analysis)</li>
+              <li>Control gap mapping against the findings register</li>
+              <li>Preventive vs. detective control gap distinction — documented explicitly</li>
+              <li>Risk-based prioritization to sequence remediation by exposure</li>
+              <li>Documentation of systemic vs. isolated failure patterns</li>
+            </ul>
+          </div>
+          <div class="module-outputs" data-reveal data-delay="200">
+            <h4>Outputs</h4>
+            <ul>
+              <li>Root Cause Analysis (RCA) documentation per finding</li>
+              <li>Control Gap Assessment report</li>
+              <li>Risk-prioritized remediation backlog</li>
+              <li>Preventive/Detective control gap inventory</li>
+              <li>Systemic pattern identification report</li>
+            </ul>
+            <blockquote>
+              "Regulators don't just want to see a fix — they want to see that you understood why the control failed."
+              <cite>— Module 2 Governance Principle</cite>
+            </blockquote>
+          </div>
+        </div>
+      </section>
+
+      <!-- Module 3 -->
+      <section class="module-section" id="module-3" aria-labelledby="mod3-heading">
+        <div class="module-header" data-reveal>
+          <div class="module-badge module-badge--lg" aria-label="Module 3">03</div>
+          <div class="module-header-text">
+            <h2 id="mod3-heading">Design</h2>
+            <p class="module-purpose">Blueprint the control redesign, define evidence standards, and establish KCI/KRI frameworks before remediation execution begins.</p>
+          </div>
+        </div>
+        <div class="module-body">
+          <div class="module-activities" data-reveal>
+            <h4>Key Activities</h4>
+            <ul>
+              <li>Control redesign and uplift to address identified root causes</li>
+              <li>Evidence standard definition — what constitutes proof of effective operation</li>
+              <li>KCI (Key Control Indicator) and KRI (Key Risk Indicator) design and thresholds</li>
+              <li>GRC system traceability alignment — linking controls to regulatory requirements</li>
+              <li>1LOD/2LOD operating model design for the revised control environment</li>
+            </ul>
+          </div>
+          <div class="module-outputs" data-reveal data-delay="200">
+            <h4>Outputs</h4>
+            <ul>
+              <li>Control Blueprints (preventive and detective) per finding</li>
+              <li>Evidence Standards Matrix</li>
+              <li>KCI/KRI definitions, thresholds, and monitoring frequency</li>
+              <li>GRC traceability mapping (Requirement → Risk → Control)</li>
+              <li>Testing and validation protocols</li>
+            </ul>
+            <blockquote>
+              "A control that isn't designed to produce evidence of its own operation cannot be verified — by your team or by the examiner."
+              <cite>— Module 3 Governance Principle</cite>
+            </blockquote>
+          </div>
+        </div>
+      </section>
+
+      <!-- Module 4 -->
+      <section class="module-section" id="module-4" aria-labelledby="mod4-heading">
+        <div class="module-header" data-reveal>
+          <div class="module-badge module-badge--lg" aria-label="Module 4">04</div>
+          <div class="module-header-text">
+            <h2 id="mod4-heading">Deliver</h2>
+            <p class="module-purpose">Execute sprint-based remediation that produces verifiable evidence artifacts and regulator-ready issue closure packages at every milestone.</p>
+          </div>
+        </div>
+        <div class="module-body">
+          <div class="module-activities" data-reveal>
+            <h4>Key Activities</h4>
+            <ul>
+              <li>Two-week sprint cycles with defined sprint goals tied to the findings register</li>
+              <li>Evidence artifact production: policy updates, configuration screenshots, test results, training records</li>
+              <li>Sprint reviews with 1LOD owners and 2LOD compliance oversight</li>
+              <li>Issue closure package assembly — structured documentation for regulator submission</li>
+              <li>Continuous Board and executive reporting against sprint milestones</li>
+            </ul>
+          </div>
+          <div class="module-outputs" data-reveal data-delay="200">
+            <h4>Outputs</h4>
+            <ul>
+              <li>Sprint evidence artifact packages (per sprint)</li>
+              <li>Issue Closure Packages (per finding) — regulator-submission ready</li>
+              <li>Sprint progress dashboards for Board reporting</li>
+              <li>1LOD/2LOD sign-off documentation</li>
+              <li>Remediation timeline actuals vs. plan tracking</li>
+            </ul>
+            <blockquote>
+              "Every sprint must end with something a regulator can read, verify, and reference in the examination file."
+              <cite>— Module 4 Governance Principle</cite>
+            </blockquote>
+          </div>
+        </div>
+      </section>
+
+      <!-- Module 5 -->
+      <section class="module-section" id="module-5" aria-labelledby="mod5-heading">
+        <div class="module-header" data-reveal>
+          <div class="module-badge module-badge--lg" aria-label="Module 5">05</div>
+          <div class="module-header-text">
+            <h2 id="mod5-heading">Sustain</h2>
+            <p class="module-purpose">Transition remediated controls to sustainable BAU operation with automated evidence collection and continuous KCI/KRI monitoring — preventing repeat findings.</p>
+          </div>
+        </div>
+        <div class="module-body">
+          <div class="module-activities" data-reveal>
+            <h4>Key Activities</h4>
+            <ul>
+              <li>BAU ownership transition — documented handoff from project team to operational owners</li>
+              <li>Automated evidence collection implementation (where applicable)</li>
+              <li>KCI/KRI monitoring dashboard activation and threshold calibration</li>
+              <li>Ongoing 1LOD self-assessment and 2LOD oversight operating model</li>
+              <li>Repeat-finding prevention review and look-back analysis</li>
+            </ul>
+          </div>
+          <div class="module-outputs" data-reveal data-delay="200">
+            <h4>Outputs</h4>
+            <ul>
+              <li>BAU Transition Playbook per control domain</li>
+              <li>KCI/KRI monitoring dashboards (live)</li>
+              <li>Automated evidence collection runbooks</li>
+              <li>1LOD/2LOD operating procedures (post-remediation)</li>
+              <li>12-month sustainability validation schedule</li>
+            </ul>
+            <blockquote>
+              "Regulatory closure is not the end — it's the beginning of demonstrating that what you built actually operates."
+              <cite>— Module 5 Governance Principle</cite>
+            </blockquote>
+          </div>
+        </div>
+      </section>
+
+      <!-- Traceability Callout -->
+      <div class="traceability-callout" data-reveal>
+        <h3>The Core Traceability Chain</h3>
+        <div class="traceability-chain-display" role="list" aria-label="Traceability chain">
+          <span class="chain-item" role="listitem">Requirement</span>
+          <span class="chain-sep" aria-hidden="true">→</span>
+          <span class="chain-item" role="listitem">Risk</span>
+          <span class="chain-sep" aria-hidden="true">→</span>
+          <span class="chain-item" role="listitem">Control</span>
+          <span class="chain-sep" aria-hidden="true">→</span>
+          <span class="chain-item" role="listitem">Evidence</span>
+          <span class="chain-sep" aria-hidden="true">→</span>
+          <span class="chain-item" role="listitem">Metric</span>
+          <span class="chain-sep" aria-hidden="true">→</span>
+          <span class="chain-item" role="listitem">Audit</span>
+        </div>
+        <p style="color:var(--muted);margin-top:20px;font-size:15px;">Every finding, every control, every evidence artifact traces through this chain — from regulatory requirement to the next examiner review.</p>
+      </div>
+
+    </div><!-- /container -->
+
+    <!-- ══ CTA BANNER ════════════════════════════════════════ -->
+    <section class="cta-banner section--sm" aria-label="Call to action">
+      <div class="container">
+        <div class="cta-banner-inner" data-reveal>
+          <span class="section-label">Next Step</span>
+          <h2>Ready to start Module 1?</h2>
+          <p>Tell us about your current findings and we'll scope an engagement within one week.</p>
+          <div class="btn-group">
+            <a href="contact.html" class="btn btn-primary">Schedule a Call</a>
+            <a href="about.html" class="btn btn-secondary">Learn About Our Approach</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══ FOOTER ════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo" aria-label="CyberClean home">
+            <img src="assets/favicon.svg" alt="" width="28" height="28">
+            <span class="nav-logo-text"><span class="brand">CyberClean</span>™</span>
+          </a>
+          <p>Evidence-driven regulatory remediation for financial institutions under OCC, FDIC, and Federal Reserve oversight.</p>
+        </div>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <div class="footer-col">
+            <h4>Platform</h4>
+            <a href="services.html">Services</a>
+            <a href="services.html#module-1">Module 1 — Trigger</a>
+            <a href="services.html#module-4">Module 4 — Deliver</a>
+            <a href="services.html#module-5">Module 5 — Sustain</a>
+          </div>
+          <div class="footer-col">
+            <h4>Company</h4>
+            <a href="about.html">About</a>
+            <a href="team.html">Team</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <div class="footer-col">
+            <h4>Contact</h4>
+            <a href="mailto:hello@cyberclean.io">hello@cyberclean.io</a>
+            <a href="contact.html">Book a Call</a>
+          </div>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 CyberClean™. All rights reserved.</span>
+        <span>Cybersecurity Regulatory Remediation for Financial Institutions</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

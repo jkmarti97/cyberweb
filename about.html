@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — CyberClean™</title>
+  <meta name="description" content="CyberClean was founded to fix the cycle of repeat regulatory findings. Learn about our mission, the market problem we solve, and the principles that guide every engagement.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    /* ── About-specific styles ── */
+    .mission-section {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .mission-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .mission-statement {
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 700;
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+    }
+    .mission-statement em {
+      font-style: normal;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .problem-section {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .problem-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .problem-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+    .problem-card-number {
+      font-size: 48px;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .problem-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .problem-card p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .commitments-section {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .commitments-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 48px;
+    }
+    .commitment-item {
+      padding: 36px 32px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      position: relative;
+    }
+    .commitment-number {
+      font-size: 64px;
+      font-weight: 800;
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: 0.2;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .commitment-item h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .commitment-item p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .team-cta-section {
+      padding: 80px 0;
+    }
+    .team-cta-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 768px) {
+      .mission-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .problem-cards {
+        grid-template-columns: 1fr;
+      }
+      .commitments-grid {
+        grid-template-columns: 1fr;
+      }
+      .team-cta-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAV ══════════════════════════════════════════════ -->
+  <nav class="nav" id="main-nav" role="navigation" aria-label="Main navigation">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="CyberClean home">
+        <img src="assets/favicon.svg" alt="" class="nav-logo-icon" width="32" height="32">
+        <span class="nav-logo-text"><span class="brand">CyberClean</span>™</span>
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+        <li><a href="team.html">Team</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li class="nav-cta"><a href="contact.html" class="btn btn-primary">Book a Call</a></li>
+      </ul>
+      <button class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ══ PAGE HEADER ══════════════════════════════════════ -->
+    <header class="page-header">
+      <div class="container">
+        <span class="section-label">About CyberClean™</span>
+        <h1 class="section-title" data-reveal>We built the firm we wished existed.</h1>
+        <p class="section-body" data-reveal data-delay="200">
+          CyberClean was founded by regulatory and cybersecurity professionals who watched the same institutions fail the same exams — not because they didn't care, but because the remediation model was broken.
+        </p>
+      </div>
+    </header>
+
+    <!-- ══ MISSION ═══════════════════════════════════════════ -->
+    <section class="mission-section" aria-labelledby="mission-heading">
+      <div class="container">
+        <div class="mission-inner">
+          <div data-reveal>
+            <span class="section-label">Mission</span>
+            <div class="accent-line"></div>
+            <p class="mission-statement" id="mission-heading">
+              To make <em>sustainable, regulator-credible cybersecurity</em> achievable for every financial institution under examination pressure — regardless of size or resources.
+            </p>
+          </div>
+          <div data-reveal data-delay="200">
+            <p style="color:var(--muted);font-size:17px;line-height:1.8;margin-bottom:20px;">
+              Financial institutions don't fail regulatory exams because they lack cybersecurity programs. They fail because their programs are built for documentation, not operation — and their remediation efforts address symptoms rather than causes.
+            </p>
+            <p style="color:var(--muted);font-size:17px;line-height:1.8;">
+              CyberClean exists to change that equation. We bring structure, discipline, and hard-won regulatory credibility to every engagement — so the findings you close stay closed.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ THE PROBLEM ══════════════════════════════════════ -->
+    <section class="problem-section" aria-labelledby="problem-heading">
+      <div class="container">
+        <div data-reveal>
+          <span class="section-label">The Market Problem</span>
+          <h2 class="section-title" id="problem-heading">Why CyberClean?<br>Because the status quo isn't working.</h2>
+          <p class="section-body">Three systemic failures drive the regulatory finding cycle at financial institutions. We were built to break it.</p>
+        </div>
+        <div class="problem-cards">
+          <div class="problem-card" data-reveal data-delay="100">
+            <div class="problem-card-number">01</div>
+            <h3>Symptom-Fixing Culture</h3>
+            <p>Most remediation programs address the visible finding — a missing policy, a failed control test — without diagnosing why the control broke. The fix looks good at submission and fails within two exam cycles.</p>
+          </div>
+          <div class="problem-card" data-reveal data-delay="200">
+            <div class="problem-card-number">02</div>
+            <h3>No Sustainability Architecture</h3>
+            <p>Projects end. Findings close. Then the institutional knowledge walks out the door, automated monitoring was never built, and 2LOD oversight returns to a checkbox exercise. Repeat findings follow.</p>
+          </div>
+          <div class="problem-card" data-reveal data-delay="300">
+            <div class="problem-card-number">03</div>
+            <h3>Regulatory Fatigue</h3>
+            <p>Institutions trapped in remediation cycles lose organizational energy, Board confidence, and regulatory goodwill. The cost of chronic non-compliance — reputational, financial, operational — compounds with each cycle.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ THREE COMMITMENTS ════════════════════════════════ -->
+    <section class="commitments-section" aria-labelledby="commitments-heading">
+      <div class="container">
+        <div data-reveal>
+          <span class="section-label">How We're Different</span>
+          <h2 class="section-title" id="commitments-heading">Three Commitments. Non-Negotiable.</h2>
+          <p class="section-body">These principles aren't marketing language. They're structural constraints on how we design and deliver every engagement.</p>
+        </div>
+        <div class="commitments-grid">
+          <div class="commitment-item" data-reveal data-delay="100">
+            <div class="commitment-number" aria-hidden="true">I</div>
+            <h3>Fix causes, not symptoms</h3>
+            <p>Every remediation plan we produce traces back to a validated root cause analysis. We refuse to help institutions build policies that patch findings without addressing the underlying control failure — because it's a disservice to the institution and an insult to the examiner's intelligence.</p>
+          </div>
+          <div class="commitment-item" data-reveal data-delay="200">
+            <div class="commitment-number" aria-hidden="true">II</div>
+            <h3>Controls must operate, not just exist</h3>
+            <p>We design controls to produce evidence of their own operation. If a control can't demonstrate that it ran, when it ran, and what it caught, it isn't a control — it's documentation. Every blueprint we deliver includes operating effectiveness validation protocols.</p>
+          </div>
+          <div class="commitment-item" data-reveal data-delay="300">
+            <div class="commitment-number" aria-hidden="true">III</div>
+            <h3>Sustainability is a first-class requirement</h3>
+            <p>Module 5 is not optional. Every engagement includes a documented BAU transition, running KCI/KRI monitoring, and operational ownership transfer. We measure our success by whether your next examination reveals the same findings — it shouldn't.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ TEAM CTA ══════════════════════════════════════════ -->
+    <section class="team-cta-section" aria-label="Meet the team">
+      <div class="container">
+        <div class="team-cta-inner" data-reveal>
+          <div>
+            <span class="section-label">The People</span>
+            <h2 class="section-title" style="margin-bottom:12px">Meet the team behind the methodology.</h2>
+            <p style="color:var(--muted);font-size:17px;max-width:480px;">Former OCC examiners, GRC practitioners, and institutional cybersecurity leaders — all united by the same frustration with how remediation has always been done.</p>
+          </div>
+          <a href="team.html" class="btn btn-primary" style="flex-shrink:0">Meet the Team</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ CTA BANNER ════════════════════════════════════════ -->
+    <section class="cta-banner section--sm" aria-label="Call to action">
+      <div class="container">
+        <div class="cta-banner-inner" data-reveal>
+          <span class="section-label">Let's Talk</span>
+          <h2>Start the conversation.</h2>
+          <p>Tell us about your current regulatory situation and we'll tell you exactly how we can help.</p>
+          <div class="btn-group">
+            <a href="contact.html" class="btn btn-primary">Schedule a Call</a>
+            <a href="services.html" class="btn btn-secondary">View Methodology</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══ FOOTER ════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo" aria-label="CyberClean home">
+            <img src="assets/favicon.svg" alt="" width="28" height="28">
+            <span class="nav-logo-text"><span class="brand">CyberClean</span>™</span>
+          </a>
+          <p>Evidence-driven regulatory remediation for financial institutions under OCC, FDIC, and Federal Reserve oversight.</p>
+        </div>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <div class="footer-col">
+            <h4>Platform</h4>
+            <a href="services.html">Services</a>
+            <a href="services.html#module-1">Module 1 — Trigger</a>
+            <a href="services.html#module-4">Module 4 — Deliver</a>
+            <a href="services.html#module-5">Module 5 — Sustain</a>
+          </div>
+          <div class="footer-col">
+            <h4>Company</h4>
+            <a href="about.html">About</a>
+            <a href="team.html">Team</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <div class="footer-col">
+            <h4>Contact</h4>
+            <a href="mailto:hello@cyberclean.io">hello@cyberclean.io</a>
+            <a href="contact.html">Book a Call</a>
+          </div>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 CyberClean™. All rights reserved.</span>
+        <span>Cybersecurity Regulatory Remediation for Financial Institutions</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+/* ============================================================
+   CyberClean™ — Animations & Scroll Reveals
+   ============================================================ */
+
+/* ── Gradient Orb ─────────────────────────────────────────── */
+@keyframes orb-pulse {
+  0%, 100% {
+    transform: scale(1) translate(-50%, -50%);
+    opacity: 0.35;
+  }
+  50% {
+    transform: scale(1.15) translate(-50%, -50%);
+    opacity: 0.5;
+  }
+}
+
+@keyframes orb-drift {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  33%       { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  66%       { border-radius: 50% 60% 30% 50% / 30% 40% 70% 60%; }
+}
+
+.hero-orb {
+  position: absolute;
+  top: 40%;
+  left: 60%;
+  width: 600px;
+  height: 600px;
+  transform-origin: top left;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 30% 30%, var(--grad-from), var(--grad-to));
+  filter: blur(80px);
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+  animation:
+    orb-pulse 6s ease-in-out infinite,
+    orb-drift 12s ease-in-out infinite;
+}
+
+/* ── Floating animation for hero text ────────────────────── */
+@keyframes float-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-animate {
+  opacity: 0;
+  animation: float-up 0.8s ease forwards;
+}
+
+.hero-animate:nth-child(1) { animation-delay: 0.1s; }
+.hero-animate:nth-child(2) { animation-delay: 0.25s; }
+.hero-animate:nth-child(3) { animation-delay: 0.4s; }
+.hero-animate:nth-child(4) { animation-delay: 0.55s; }
+
+/* ── Gradient border glow pulse ───────────────────────────── */
+@keyframes border-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0); }
+  50%       { box-shadow: 0 0 24px 4px rgba(0, 212, 255, 0.15); }
+}
+
+/* ── Scroll Reveal ────────────────────────────────────────── */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+[data-reveal].visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-reveal][data-delay="100"] { transition-delay: 0.1s; }
+[data-reveal][data-delay="200"] { transition-delay: 0.2s; }
+[data-reveal][data-delay="300"] { transition-delay: 0.3s; }
+[data-reveal][data-delay="400"] { transition-delay: 0.4s; }
+[data-reveal][data-delay="500"] { transition-delay: 0.5s; }
+
+/* ── Module flow arrows (CSS-only) ───────────────────────── */
+@keyframes arrow-flow {
+  0%   { opacity: 0.3; transform: translateX(-4px); }
+  50%  { opacity: 1;   transform: translateX(0); }
+  100% { opacity: 0.3; transform: translateX(4px); }
+}
+
+.flow-arrow {
+  animation: arrow-flow 1.8s ease-in-out infinite;
+}
+
+/* ── Stat counter shimmer ─────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    var(--grad-from) 0%,
+    #fff 40%,
+    var(--grad-to) 60%,
+    var(--grad-from) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+/* ── Page transition fade ─────────────────────────────────── */
+@keyframes page-enter {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+main {
+  animation: page-enter 0.4s ease;
+}
+
+/* ── Loading spinner (for team cards) ────────────────────── */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border);
+  border-top-color: var(--grad-from);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 48px auto;
+}

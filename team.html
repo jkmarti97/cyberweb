@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team — CyberClean™</title>
+  <meta name="description" content="Meet the CyberClean team — former OCC examiners, GRC practitioners, and institutional cybersecurity leaders with deep regulatory remediation experience.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    /* ── Team-specific styles ── */
+    #team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 64px;
+    }
+
+    .team-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      padding: 36px 32px 28px;
+    }
+
+    .team-avatar-wrap {
+      margin-bottom: 24px;
+    }
+
+    .team-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--border);
+    }
+
+    .team-initials-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+
+    .team-name {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .team-title {
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 500;
+      margin-bottom: 16px;
+      letter-spacing: 0.01em;
+    }
+
+    .team-bio-wrap {
+      flex: 1;
+      margin-bottom: 20px;
+    }
+
+    .team-bio {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .bio-toggle {
+      background: none;
+      border: none;
+      padding: 0;
+      margin-top: 8px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .team-linkedin {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      transition: color 0.2s ease;
+      text-decoration: none;
+    }
+
+    .team-linkedin:hover {
+      color: var(--grad-from);
+    }
+
+    .team-placeholder {
+      grid-column: 1 / -1;
+      text-align: center;
+      color: var(--muted);
+      font-size: 18px;
+      padding: 64px 0;
+    }
+
+    @media (max-width: 1024px) {
+      #team-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      #team-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAV ══════════════════════════════════════════════ -->
+  <nav class="nav" id="main-nav" role="navigation" aria-label="Main navigation">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="CyberClean home">
+        <img src="assets/favicon.svg" alt="" class="nav-logo-icon" width="32" height="32">
+        <span class="nav-logo-text"><span class="brand">CyberClean</span>™</span>
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="team.html" class="active">Team</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li class="nav-cta"><a href="contact.html" class="btn btn-primary">Book a Call</a></li>
+      </ul>
+      <button class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ══ PAGE HEADER ══════════════════════════════════════ -->
+    <header class="page-header">
+      <div class="container">
+        <span class="section-label">The People</span>
+        <h1 class="section-title" data-reveal>Practitioners, not consultants.</h1>
+        <p class="section-body" data-reveal data-delay="200">
+          Every CyberClean team member has been inside the examination process — as examiner, compliance officer, or remediation lead. We know what regulators actually look for because we've been on both sides of the table.
+        </p>
+      </div>
+    </header>
+
+    <!-- ══ TEAM GRID (rendered by team.js) ═════════════════ -->
+    <section class="section" aria-label="Team members">
+      <div class="container">
+        <div id="team-grid" role="list" aria-label="Team members">
+          <!-- Cards injected by team.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ JOIN CTA ══════════════════════════════════════════ -->
+    <section class="section--sm" aria-label="Join the team">
+      <div class="container">
+        <div class="card" style="text-align:center;padding:56px 48px;" data-reveal>
+          <span class="section-label">We're Growing</span>
+          <h2 class="section-title" style="margin:16px auto;max-width:480px">Want to join a team that's actually changing how remediation gets done?</h2>
+          <p style="color:var(--muted);font-size:17px;max-width:520px;margin:0 auto 36px;">We're looking for practitioners with deep regulatory or cybersecurity backgrounds who are tired of watching the same broken playbook get run over and over.</p>
+          <a href="contact.html" class="btn btn-primary">Get in Touch</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ CTA BANNER ════════════════════════════════════════ -->
+    <section class="cta-banner section--sm" aria-label="Call to action">
+      <div class="container">
+        <div class="cta-banner-inner" data-reveal>
+          <span class="section-label">Start Today</span>
+          <h2>Work directly with our principals.</h2>
+          <p>Every CyberClean engagement is staffed with senior practitioners — no bait-and-switch to junior teams.</p>
+          <div class="btn-group">
+            <a href="contact.html" class="btn btn-primary">Book a Call</a>
+            <a href="about.html" class="btn btn-secondary">Our Approach</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══ FOOTER ════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo" aria-label="CyberClean home">
+            <img src="assets/favicon.svg" alt="" width="28" height="28">
+            <span class="nav-logo-text"><span class="brand">CyberClean</span>™</span>
+          </a>
+          <p>Evidence-driven regulatory remediation for financial institutions under OCC, FDIC, and Federal Reserve oversight.</p>
+        </div>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <div class="footer-col">
+            <h4>Platform</h4>
+            <a href="services.html">Services</a>
+            <a href="services.html#module-1">Module 1 — Trigger</a>
+            <a href="services.html#module-4">Module 4 — Deliver</a>
+            <a href="services.html#module-5">Module 5 — Sustain</a>
+          </div>
+          <div class="footer-col">
+            <h4>Company</h4>
+            <a href="about.html">About</a>
+            <a href="team.html">Team</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <div class="footer-col">
+            <h4>Contact</h4>
+            <a href="mailto:hello@cyberclean.io">hello@cyberclean.io</a>
+            <a href="contact.html">Book a Call</a>
+          </div>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 CyberClean™. All rights reserved.</span>
+        <span>Cybersecurity Regulatory Remediation for Financial Institutions</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/team.js"></script>
+</body>
+</html>

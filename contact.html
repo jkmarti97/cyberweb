@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — CyberClean™</title>
+  <meta name="description" content="Get in touch with CyberClean. Tell us about your regulatory findings and schedule a call with our team.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    /* ── Contact-specific styles ── */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+      padding: 64px 0 96px;
+    }
+
+    .contact-form-col h2 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .contact-form-col .lead {
+      color: var(--muted);
+      font-size: 16px;
+      margin-bottom: 36px;
+      line-height: 1.6;
+    }
+
+    .contact-calendly-col h2 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .contact-calendly-col .lead {
+      color: var(--muted);
+      font-size: 16px;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .calendly-inline-widget {
+      min-width: 280px;
+      height: 700px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .calendly-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 400px;
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      text-align: center;
+      padding: 40px;
+    }
+
+    .calendly-placeholder .placeholder-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.4;
+    }
+
+    .calendly-placeholder p {
+      color: var(--muted);
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .calendly-placeholder code {
+      font-size: 13px;
+      color: var(--grad-from);
+      background: rgba(0, 212, 255, 0.08);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .trust-bar {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+      margin-top: 12px;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .trust-item svg {
+      color: var(--grad-from);
+      flex-shrink: 0;
+    }
+
+    .contact-info-strip {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 0;
+    }
+
+    .contact-info-inner {
+      display: flex;
+      justify-content: center;
+      gap: 64px;
+      flex-wrap: wrap;
+      text-align: center;
+    }
+
+    .contact-info-item h4 {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .contact-info-item a,
+    .contact-info-item p {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .contact-info-item a:hover {
+      color: var(--grad-from);
+    }
+
+    @media (max-width: 768px) {
+      .contact-layout {
+        grid-template-columns: 1fr;
+        gap: 48px;
+        padding: 48px 0 64px;
+      }
+
+      .contact-info-inner {
+        gap: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAV ══════════════════════════════════════════════ -->
+  <nav class="nav" id="main-nav" role="navigation" aria-label="Main navigation">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="CyberClean home">
+        <img src="assets/favicon.svg" alt="" class="nav-logo-icon" width="32" height="32">
+        <span class="nav-logo-text"><span class="brand">CyberClean</span>™</span>
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="team.html">Team</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+        <li class="nav-cta"><a href="contact.html" class="btn btn-primary">Book a Call</a></li>
+      </ul>
+      <button class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ══ PAGE HEADER ══════════════════════════════════════ -->
+    <header class="page-header">
+      <div class="container">
+        <span class="section-label">Get in Touch</span>
+        <h1 class="section-title" data-reveal>Let's talk about your findings.</h1>
+        <p class="section-body" data-reveal data-delay="200">
+          Tell us where you are — active MRAs, a pending exam, a consent order on the horizon — and we'll tell you exactly how CyberClean can help.
+        </p>
+      </div>
+    </header>
+
+    <!-- ══ CONTACT INFO STRIP ══════════════════════════════ -->
+    <div class="contact-info-strip">
+      <div class="container">
+        <div class="contact-info-inner">
+          <div class="contact-info-item">
+            <h4>Email</h4>
+            <a href="mailto:hello@cyberclean.io">hello@cyberclean.io</a>
+          </div>
+          <div class="contact-info-item">
+            <h4>Response Time</h4>
+            <p>Within 1 business day</p>
+          </div>
+          <div class="contact-info-item">
+            <h4>Serving</h4>
+            <p>OCC · FDIC · Federal Reserve Institutions</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ CONTACT LAYOUT ════════════════════════════════════ -->
+    <section aria-label="Contact options">
+      <div class="container">
+        <div class="contact-layout">
+
+          <!-- ── Left: Form ── -->
+          <div class="contact-form-col" data-reveal>
+            <span class="section-label">Send a Message</span>
+            <h2>Tell us about your situation.</h2>
+            <p class="lead">Fill out the form and a senior CyberClean practitioner will respond within one business day.</p>
+
+            <!--
+              SETUP: Replace the action URL with your Formspree endpoint.
+              1. Create a free account at formspree.io
+              2. Create a new form — copy the endpoint URL (https://formspree.io/f/XXXXXXXX)
+              3. Replace the action value below with your endpoint
+            -->
+            <form
+              id="contact-form"
+              action="https://formspree.io/f/YOUR_FORM_ID"
+              method="POST"
+              novalidate
+              aria-label="Contact form"
+            >
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="name">Full Name <span aria-hidden="true">*</span></label>
+                  <input type="text" id="name" name="name" placeholder="Jane Smith" required autocomplete="name">
+                </div>
+                <div class="form-group">
+                  <label for="company">Institution / Company <span aria-hidden="true">*</span></label>
+                  <input type="text" id="company" name="company" placeholder="First National Bank" required autocomplete="organization">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="role">Your Role</label>
+                  <input type="text" id="role" name="role" placeholder="Chief Compliance Officer" autocomplete="organization-title">
+                </div>
+                <div class="form-group">
+                  <label for="email">Email Address <span aria-hidden="true">*</span></label>
+                  <input type="email" id="email" name="email" placeholder="jane@firstnational.com" required autocomplete="email">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="regulatory-context">Regulatory Context</label>
+                <select id="regulatory-context" name="regulatory_context">
+                  <option value="" disabled selected>Select your situation…</option>
+                  <option value="occ-mra">OCC MRA / MRIA</option>
+                  <option value="fdic-mra">FDIC MRA / MRIA</option>
+                  <option value="federal-reserve">Federal Reserve Finding</option>
+                  <option value="consent-order">Consent Order</option>
+                  <option value="audit-finding">Internal / External Audit Finding</option>
+                  <option value="proactive">Proactive / Pre-Exam Preparation</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="message">Tell us about your findings <span aria-hidden="true">*</span></label>
+                <textarea id="message" name="message" placeholder="What are you dealing with? How many findings? Any consent order provisions? What's the examiner's timeline?" required></textarea>
+              </div>
+
+              <!-- Honeypot field for spam prevention -->
+              <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+              <button type="submit" class="btn btn-primary btn-full">
+                Send Message
+              </button>
+
+              <div id="form-status" class="form-status" role="alert" aria-live="polite"></div>
+            </form>
+
+            <div class="trust-bar">
+              <div class="trust-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Confidential
+              </div>
+              <div class="trust-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                1 business day response
+              </div>
+              <div class="trust-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Senior practitioners only
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Right: Calendly ── -->
+          <div class="contact-calendly-col" data-reveal data-delay="200">
+            <span class="section-label">Book Directly</span>
+            <h2>Prefer to talk?</h2>
+            <p class="lead">Book a 30-minute discovery call directly on our calendar. No sales pressure — just a candid conversation about your regulatory situation.</p>
+
+            <!--
+              SETUP: Replace YOUR_CALENDLY_URL with your Calendly scheduling link.
+              Example: https://calendly.com/cyberclean/discovery
+              The widget will render inline once the Calendly script loads.
+            -->
+            <div
+              class="calendly-inline-widget"
+              data-url="YOUR_CALENDLY_URL?hide_gdpr_banner=1&background_color=1a1a2e&text_color=f0f0f5&primary_color=00D4FF"
+              aria-label="Calendly scheduling widget"
+            >
+              <!-- Shown only if Calendly script hasn't loaded or URL is placeholder -->
+              <div class="calendly-placeholder">
+                <div class="placeholder-icon" aria-hidden="true">📅</div>
+                <p><strong>Calendly widget loads here.</strong></p>
+                <p style="margin-top:8px">To activate: replace <code>YOUR_CALENDLY_URL</code> in<br><code>contact.html</code> with your Calendly link.</p>
+              </div>
+            </div>
+
+            <p style="color:var(--muted);font-size:13px;margin-top:16px;text-align:center;">
+              Calls are confidential. We'll send a brief intake form 24 hours before.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══ FOOTER ════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo" aria-label="CyberClean home">
+            <img src="assets/favicon.svg" alt="" width="28" height="28">
+            <span class="nav-logo-text"><span class="brand">CyberClean</span>™</span>
+          </a>
+          <p>Evidence-driven regulatory remediation for financial institutions under OCC, FDIC, and Federal Reserve oversight.</p>
+        </div>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <div class="footer-col">
+            <h4>Platform</h4>
+            <a href="services.html">Services</a>
+            <a href="services.html#module-1">Module 1 — Trigger</a>
+            <a href="services.html#module-4">Module 4 — Deliver</a>
+            <a href="services.html#module-5">Module 5 — Sustain</a>
+          </div>
+          <div class="footer-col">
+            <h4>Company</h4>
+            <a href="about.html">About</a>
+            <a href="team.html">Team</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <div class="footer-col">
+            <h4>Contact</h4>
+            <a href="mailto:hello@cyberclean.io">hello@cyberclean.io</a>
+            <a href="contact.html">Book a Call</a>
+          </div>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 CyberClean™. All rights reserved.</span>
+        <span>Cybersecurity Regulatory Remediation for Financial Institutions</span>
+      </div>
+    </div>
+  </footer>
+
+  <!--
+    SETUP: Uncomment the Calendly script tag below once you've set your YOUR_CALENDLY_URL.
+    This loads the Calendly widget embed script from Calendly's CDN.
+  -->
+  <!-- <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script> -->
+
+  <script src="js/main.js"></script>
+</body>
+</html>
