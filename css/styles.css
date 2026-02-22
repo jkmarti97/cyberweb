@@ -254,7 +254,7 @@ ul {
   gap: 32px;
 }
 
-.nav-links a {
+.nav-links a :not(.btn.btn-primary) {
   font-size: 15px;
   font-weight: 500;
   color: var(--muted);
@@ -438,7 +438,7 @@ ul {
   position: absolute;
   inset: -1px;
   border-radius: 16px;
-  background: var(--gradient);
+  background: var(--surface);
   z-index: -1;
 }
 
