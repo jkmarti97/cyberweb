@@ -803,14 +803,14 @@ ul {
 .modules-grid {
   display: grid;
   /* 4 equal columns on desktop — 5 columns is too narrow at 1200px container */
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 16px;
 }
 
 /* 5th card spans full row to stay centered when there are 5 items */
-.modules-grid > *:nth-child(5):last-child {
+/*.modules-grid > *:nth-child(5):last-child {
   grid-column: 2 / 4;
-}
+}*/
 
 .module-card {
   display: block;
