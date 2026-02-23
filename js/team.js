@@ -1,3 +1,10 @@
+/*
+© 2026–Present Jeffery Martin.
+Dual-licensed: Commercial license required for business use.
+Apache 2.0 applies only if explicitly included.
+No implied rights granted.
+*/
+
 /* ============================================================
    CyberClean™ — Team JS
    Fetches data/team.json, renders bio cards dynamically.
@@ -7,9 +14,11 @@
 (function () {
   'use strict';
 
-  const GRID_ID       = 'team-grid';
-  const DATA_PATH     = 'data/team.json';
-  const BIO_MAX_LINES = 3;
+  const GRID_ID   = 'team-grid';
+  const DATA_PATH = 'data/team.json';
+
+  var _activeCard = null; // card that triggered open (for focus return)
+  var _escHandler = null; // keydown listener reference for cleanup
 
   /* ── Utility: generate initials from a full name ────────── */
   function getInitials(name) {
@@ -31,122 +40,12 @@
     return Math.abs(hash) % 360;
   }
 
-  /* ── Build a single team card ───────────────────────────── */
-  function buildCard(member) {
-    var card = document.createElement('article');
-    card.className = 'team-card card';
-    card.setAttribute('data-reveal', '');
-
-    /* ── Headshot / Initials avatar ── */
-    var avatarWrap = document.createElement('div');
-    avatarWrap.className = 'team-avatar-wrap';
-
-    if (member.headshot) {
-      var img = document.createElement('img');
-      img.className = 'team-avatar';
-      img.alt       = member.name;
-      img.src       = member.headshot;
-
-      // Fallback to initials if image fails
-      img.addEventListener('error', function () {
-        avatarWrap.replaceChild(buildInitialsAvatar(member.name), img);
-      });
-
-      avatarWrap.appendChild(img);
-    } else {
-      avatarWrap.appendChild(buildInitialsAvatar(member.name));
-    }
-
-    card.appendChild(avatarWrap);
-
-    /* ── Name & Title ── */
-    var nameEl = document.createElement('h3');
-    nameEl.className = 'team-name gradient-text';
-    nameEl.textContent = member.name;
-    avatarWrap.appendChild(nameEl);
-
-    var titleEl = document.createElement('p');
-    titleEl.className = 'team-title';
-    titleEl.textContent = member.title || '';
-    avatarWrap.appendChild(titleEl);
-
-    /* ── Bio with truncation ── */
-    var bioText = (member.bio || '').trim();
-    if (bioText) {
-      var bioWrap = document.createElement('div');
-      bioWrap.className = 'team-bio-wrap';
-
-      var bioEl = document.createElement('p');
-      bioEl.className = 'team-bio';
-      bioEl.id = 'bio-' + member.name.replace(/\s+/g, '-').toLowerCase();
-      bioEl.innerText = bioText;
-      bioWrap.appendChild(bioEl);
-
-      // Add "Read more" toggle after paint so we can measure line count
-      card.appendChild(bioWrap);
-
-      requestAnimationFrame(function () {
-        var lineHeight  = parseFloat(getComputedStyle(bioEl).lineHeight) || 24;
-        var maxHeight   = Math.ceil(lineHeight) * BIO_MAX_LINES;
-        var fullHeight  = bioEl.scrollHeight;
-
-        // Only add toggle if bio is genuinely longer than 3 lines (8px buffer)
-        if (fullHeight > maxHeight + 8) {
-          bioEl.style.maxHeight  = maxHeight + 'px';
-          bioEl.style.overflow   = 'hidden';
-          bioEl.style.transition = 'max-height 0.35s ease';
-
-          var toggle = document.createElement('button');
-          toggle.className          = 'bio-toggle';
-          toggle.textContent        = 'Read more';
-          toggle.setAttribute('aria-expanded', 'false');
-          toggle.setAttribute('aria-controls', bioEl.id);
-          toggle.setAttribute('aria-label', 'Read more about ' + member.name);
-          toggle.dataset.expanded   = 'false';
-
-          toggle.addEventListener('click', function () {
-            var expanded = toggle.dataset.expanded === 'true';
-            if (expanded) {
-              bioEl.style.maxHeight           = maxHeight + 'px';
-              toggle.textContent              = 'Read more';
-              toggle.setAttribute('aria-expanded', 'false');
-              toggle.setAttribute('aria-label', 'Read more about ' + member.name);
-              toggle.dataset.expanded         = 'false';
-            } else {
-              bioEl.style.maxHeight           = fullHeight + 'px';
-              toggle.textContent              = 'Read less';
-              toggle.setAttribute('aria-expanded', 'true');
-              toggle.setAttribute('aria-label', 'Read less about ' + member.name);
-              toggle.dataset.expanded         = 'true';
-            }
-          });
-
-          bioWrap.appendChild(toggle);
-        }
-      });
-    }
-
-    /* ── LinkedIn link ── */
-    if (member.linkedin) {
-      var linkedinLink = document.createElement('a');
-      linkedinLink.className  = 'team-linkedin';
-      linkedinLink.href       = member.linkedin;
-      linkedinLink.target     = '_blank';
-      linkedinLink.rel        = 'noopener noreferrer';
-      linkedinLink.setAttribute('aria-label', member.name + ' on LinkedIn');
-      linkedinLink.innerHTML  = linkedinIconSVG() + '<span>LinkedIn</span>';
-      card.appendChild(linkedinLink);
-    }
-
-    return card;
-  }
-
   /* ── Initials avatar element ────────────────────────────── */
   function buildInitialsAvatar(name) {
     var hue    = nameToHue(name);
     var avatar = document.createElement('div');
     avatar.className   = 'team-initials-avatar';
-    // Use white text — lightness 28%/20% ensures ≥7:1 contrast on all hues (WCAG AAA)
+    // White text — lightness 28%/20% ensures ≥7:1 contrast on all hues (WCAG AAA)
     avatar.textContent = getInitials(name) || '?';
     avatar.setAttribute('aria-label', name + ' avatar');
     avatar.style.background =
@@ -154,9 +53,170 @@
     return avatar;
   }
 
+  /* ── Build avatar: img with initials fallback ───────────── */
+  function buildAvatar(member) {
+    if (member.headshot) {
+      var img = document.createElement('img');
+      img.className = 'team-avatar';
+      img.alt       = member.name;
+      img.src       = member.headshot;
+      img.addEventListener('error', function () {
+        img.parentNode.replaceChild(buildInitialsAvatar(member.name), img);
+      });
+      return img;
+    }
+    return buildInitialsAvatar(member.name);
+  }
+
+  /* ── Build LinkedIn link element ────────────────────────── */
+  function buildLinkedIn(member) {
+    if (!member.linkedin) return null;
+    var link = document.createElement('a');
+    link.className  = 'team-linkedin';
+    link.href       = member.linkedin;
+    link.target     = '_blank';
+    link.rel        = 'noopener noreferrer';
+    link.setAttribute('aria-label', member.name + ' on LinkedIn');
+    link.innerHTML  = linkedinIconSVG() + '<span>LinkedIn</span>';
+    return link;
+  }
+
   /* ── LinkedIn SVG icon ──────────────────────────────────── */
   function linkedinIconSVG() {
     return '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>';
+  }
+
+  /* ── Build a compact front card ─────────────────────────── */
+  function buildCard(member) {
+    var card = document.createElement('article');
+    card.className = 'team-card card';
+    card.setAttribute('data-reveal', '');
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', member.name + ', click to read bio');
+
+    /* Avatar */
+    var avatarWrap = document.createElement('div');
+    avatarWrap.className = 'team-avatar-wrap';
+    avatarWrap.appendChild(buildAvatar(member));
+    card.appendChild(avatarWrap);
+
+    /* Name */
+    var nameEl = document.createElement('h3');
+    nameEl.className = 'team-name gradient-text';
+    nameEl.textContent = member.name;
+    card.appendChild(nameEl);
+
+    /* Title */
+    var titleEl = document.createElement('p');
+    titleEl.className = 'team-title';
+    titleEl.textContent = member.title || '';
+    card.appendChild(titleEl);
+
+    /* LinkedIn — stop propagation so card click doesn't also fire */
+    var linkedin = buildLinkedIn(member);
+    if (linkedin) {
+      linkedin.addEventListener('click', function (e) { e.stopPropagation(); });
+      card.appendChild(linkedin);
+    }
+
+    /* Interactions */
+    card.addEventListener('click', function () { openCardModal(member, card); });
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openCardModal(member, card);
+      }
+    });
+
+    return card;
+  }
+
+  /* ── Open modal with expanded card ─────────────────────── */
+  function openCardModal(member, triggerCard) {
+    _activeCard = triggerCard;
+
+    /* Backdrop */
+    var backdrop = document.createElement('div');
+    backdrop.className = 'team-modal-backdrop';
+    backdrop.setAttribute('role', 'dialog');
+    backdrop.setAttribute('aria-modal', 'true');
+    backdrop.setAttribute('aria-label', member.name);
+
+    /* Modal card */
+    var modalCard = document.createElement('div');
+    modalCard.className = 'team-modal-card card';
+    modalCard.setAttribute('tabindex', '-1');
+
+    /* Header: avatar left + meta right */
+    var header = document.createElement('div');
+    header.className = 'team-modal-header';
+
+    header.appendChild(buildAvatar(member));
+
+    var meta = document.createElement('div');
+    meta.className = 'team-modal-meta';
+
+    var nameEl = document.createElement('h3');
+    nameEl.className = 'team-name gradient-text';
+    nameEl.textContent = member.name;
+    meta.appendChild(nameEl);
+
+    var titleEl = document.createElement('p');
+    titleEl.className = 'team-title';
+    titleEl.textContent = member.title || '';
+    meta.appendChild(titleEl);
+
+    var linkedin = buildLinkedIn(member);
+    if (linkedin) meta.appendChild(linkedin);
+
+    header.appendChild(meta);
+    modalCard.appendChild(header);
+
+    /* Bio */
+    if (member.bio) {
+      var bioEl = document.createElement('p');
+      bioEl.className = 'team-modal-bio';
+      bioEl.innerText = member.bio;
+      modalCard.appendChild(bioEl);
+    }
+
+    backdrop.appendChild(modalCard);
+    document.body.appendChild(backdrop);
+    document.body.style.overflow = 'hidden';
+
+    /* Card click stays inside — backdrop click closes */
+    //modalCard.addEventListener('click', function (e) { e.stopPropagation(); });
+    modalCard.addEventListener('click', function () { closeCardModal(backdrop, modalCard); });
+    backdrop.addEventListener('click', function () { closeCardModal(backdrop, modalCard); });
+
+    /* Escape key closes */
+    _escHandler = function (e) {
+      if (e.key === 'Escape') closeCardModal(backdrop, modalCard);
+    };
+    document.addEventListener('keydown', _escHandler);
+
+    /* Focus for accessibility */
+    modalCard.focus();
+  }
+
+  /* ── Close modal with animation ─────────────────────────── */
+  function closeCardModal(backdrop, modalCard) {
+    backdrop.classList.add('closing');
+    modalCard.classList.add('closing');
+
+    setTimeout(function () {
+      if (backdrop.parentNode) backdrop.parentNode.removeChild(backdrop);
+      document.body.style.overflow = '';
+      if (_escHandler) {
+        document.removeEventListener('keydown', _escHandler);
+        _escHandler = null;
+      }
+      if (_activeCard) {
+        _activeCard.focus();
+        _activeCard = null;
+      }
+    }, 320);
   }
 
   /* ── Placeholder shown if JSON array is empty ───────────── */
@@ -191,7 +251,7 @@
 
       members.forEach(function (member, i) {
         var card = buildCard(member);
-        // Stagger reveal delays
+        // Stagger reveal delays across 3-column rows
         if (i < 6) {
           card.setAttribute('data-delay', String((i % 3) * 100 + 100));
         }

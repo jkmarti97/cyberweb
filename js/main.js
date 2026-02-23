@@ -1,3 +1,10 @@
+/*
+© 2026–Present Jeffery Martin.
+Dual-licensed: Commercial license required for business use.
+Apache 2.0 applies only if explicitly included.
+No implied rights granted.
+*/
+
 /* ============================================================
    CyberClean™ — Main JS
    Nav scroll, mobile menu, scroll reveal

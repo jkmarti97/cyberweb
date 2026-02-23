@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+<!--
+© 2026–Present Jeffery Martin.
+Dual-licensed: Commercial license required for business use.
+Apache 2.0 applies only if explicitly included.
+No implied rights granted.
+-->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -10,43 +16,66 @@
   <link rel="stylesheet" href="css/animations.css">
   <style>
     /* ── Team-specific styles ── */
+
+    /* Grid: 3 columns on desktop, flex-wrap */
     #team-grid {
-      display: grid;
-      grid-template-columns: repeat(1, 1fr);
+      display: flex;
+      flex-wrap: wrap;
       gap: 32px;
       margin-top: 64px;
+      justify-content: center;
     }
 
+    /* Compact front card — 3 cols on desktop */
     .team-card {
+      flex: 0 0 calc(33.333% - 22px);
+      max-width: 360px;
+      min-width: 240px;
+      cursor: pointer;
+      padding: 28px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+    }
+
+    @media (max-width: 900px) {
+      .team-card {
+        flex: 0 0 calc(50% - 16px);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .team-card {
+        flex: 0 0 100%;
+        max-width: 420px;
+      }
+    }
+
+    /* Avatar stacked above name on front card */
+    .team-avatar-wrap {
+      margin-bottom: 16px;
       display: flex;
       flex-direction: column;
       gap: 0;
-      padding: 36px 32px 28px;
-    }
-
-    .team-avatar-wrap {
-      margin-bottom: 24px;
-      display: flex;
-      flex-direction: row;
-      gap: 1.5em;
     }
 
     .team-avatar {
-      width: 100px;
-      height: 100px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
       object-fit: cover;
       border: 2px solid var(--border);
     }
 
     .team-initials-avatar {
-      width: 100px;
-      height: 100px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 32px;
+      font-size: 26px;
       font-weight: 800;
       color: #fff;
       letter-spacing: -0.02em;
@@ -64,32 +93,6 @@
       font-weight: 500;
       margin-bottom: 16px;
       letter-spacing: 0.01em;
-    }
-
-    .team-bio-wrap {
-      flex: 1;
-      margin-bottom: 20px;
-    }
-
-    .team-bio {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .bio-toggle {
-      background: none;
-      border: none;
-      padding: 0;
-      margin-top: 8px;
-      font-family: inherit;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
     }
 
     .team-linkedin {
@@ -111,22 +114,94 @@
     }
 
     .team-placeholder {
-      grid-column: 1 / -1;
+      flex: 0 0 100%;
       text-align: center;
       color: var(--muted);
       font-size: 18px;
       padding: 64px 0;
     }
 
-    @media (max-width: 1024px) {
-      #team-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    /* ── Modal backdrop ── */
+    .team-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      animation: backdrop-fade-in 0.3s ease forwards;
     }
 
-    @media (max-width: 600px) {
-      #team-grid {
-        grid-template-columns: 1fr;
+    .team-modal-backdrop.closing {
+      animation: backdrop-fade-out 0.3s ease forwards;
+    }
+
+    /* Expanded card in modal */
+    .team-modal-card {
+      /*! width: 100%; */
+      max-width: 1200px;
+      animation: flip-reveal 0.4s ease forwards;
+      transform-origin: center center;
+      cursor: default;
+      /*! padding: 3em; */
+      max-height: calc( 100vh - 2em);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .team-modal-card.closing {
+      animation: flip-hide 0.3s ease forwards;
+    }
+
+    /* Modal header: avatar left, meta right */
+    .team-modal-header {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    /* Avatar sizes in modal */
+    .team-modal-card .team-avatar,
+    .team-modal-card .team-initials-avatar {
+      width: 100px;
+      height: 100px;
+      font-size: 32px;
+      flex-shrink: 0;
+    }
+
+    .team-modal-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+
+    /* Title in modal has no bottom margin pushing into bio */
+    .team-modal-meta .team-title {
+      margin-bottom: 8px;
+    }
+
+    /* Bio in expanded modal */
+    .team-modal-bio {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.75;
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+      margin-top: 4px;
+      overflow: scroll;
+    }
+
+    @media (max-width: 480px) {
+      .team-modal-header {
+        flex-direction: column;
+        align-items: flex-start;
       }
     }
   </style>

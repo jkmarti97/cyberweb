@@ -1,3 +1,10 @@
+/*
+© 2026–Present Jeffery Martin.
+Dual-licensed: Commercial license required for business use.
+Apache 2.0 applies only if explicitly included.
+No implied rights granted.
+*/
+
 /* ============================================================
    CyberClean™ — Global Styles
    ============================================================ */
@@ -116,7 +123,7 @@ ul {
 .section-body {
   font-size: 18px;
   color: var(--muted);
-  max-width: 640px;
+  max-width: 100;
   line-height: 1.7;
 }
 
