@@ -23,6 +23,7 @@ CLAUDE.md
 
 # Custom domain — not live yet; remove this line when ready to deploy
 CNAME
+LICENSE-COMMERCIAL.txt
 
 # Secrets — never commit these
 .env
