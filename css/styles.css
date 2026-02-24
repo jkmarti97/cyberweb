@@ -331,8 +331,9 @@ ul {
 
 .footer-links {
   display: flex;
-  gap: 48px;
+  /*gap: 48px;*/
   flex-wrap: wrap;
+  flex-direction: column;
 }
 
 .footer-col h4 {
@@ -341,7 +342,7 @@ ul {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
-  margin-bottom: 16px;
+  margin-bottom: 0.5em;
 }
 
 .footer-col a {
@@ -354,6 +355,11 @@ ul {
 
 .footer-col a:hover {
   color: var(--grad-from);
+}
+
+.footer-row {
+	display: flex;
+	gap: 3em;
 }
 
 .footer-bottom {
@@ -721,7 +727,7 @@ ul {
 /* ── Homepage: Approach ───────────────────────────────────── */
 .approach-inner {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 64px;
   align-items: center;
 }
@@ -729,6 +735,7 @@ ul {
 .approach-principles {
   list-style: none;
   margin-top: 28px;
+  margin-bottom: 28px;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -754,11 +761,25 @@ ul {
   flex-shrink: 0;
 }
 
+.approach-visual {
+  display: flex;
+  justify-content: center;"
+}
+
+.approach-sub {
+	display: flex;
+	/* gap: 2em; */
+	justify-content: space-between;
+  flex-wrap: wrap;
+}
+
 .chain-box {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 32px;
+  margin-top: 2em;
+  margin-bottom: 2em;
 }
 
 .chain-label {
