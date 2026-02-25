@@ -145,6 +145,68 @@ p, .section-body {
   margin-bottom: 32px;
 }
 
+/* ── Utility: Glassmorphism variants ──────────────────────── */
+.glass-base {
+  position: relative;
+  background: rgba(26, 26, 46, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  overflow: hidden;
+}
+
+.glass-base.sm {
+  background: rgba(26, 26, 46, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-color: rgba(0, 212, 255, 0.2);
+}
+
+.glass-base.lg {
+  background: rgba(26, 26, 46, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-color: rgba(0, 212, 255, 0.12);
+}
+
+/* Gradient overlay for glass elements */
+.glass-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(139, 92, 246, 0.08));
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glass-base.sm .glass-overlay {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.03), rgba(139, 92, 246, 0.03));
+}
+
+.glass-base.lg .glass-overlay {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(139, 92, 246, 0.05));
+}
+
+/* Content layer above overlay */
+.glass-base > :not(.glass-overlay) {
+  position: relative;
+  z-index: 1;
+}
+
+/* Hover pattern for interactive glass elements */
+.glass-interactive:hover {
+  background: rgba(26, 26, 46, 0.75);
+  border-color: rgba(0, 212, 255, 0.25);
+  transition: all 0.3s ease;
+}
+
+.glass-interactive.lifted:hover {
+  transform: translateY(-4px);
+}
+
+.glass-interactive.shadow:hover {
+  box-shadow: 0 16px 32px rgba(0, 212, 255, 0.1);
+}
+
 /* ── Buttons ──────────────────────────────────────────────── */
 .btn {
   display: inline-flex;
@@ -335,7 +397,6 @@ p, .section-body {
 
 .footer-links {
   display: flex;
-  /*gap: 48px;*/
   flex-wrap: wrap;
   flex-direction: column;
 }
@@ -633,17 +694,6 @@ p, .section-body {
   transition: all 0.3s ease;
 }
 
-/* ── Glass gradient overlay utility ─────────────────────── */
-.glass-overlay::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(139, 92, 246, 0.05));
-  border-radius: inherit;
-  pointer-events: none;
-  z-index: 0;
-}
-
 /* ── Responsive ───────────────────────────────────────────── */
 @media (max-width: 768px) {
   .nav-links {
@@ -665,7 +715,6 @@ p, .section-body {
   }
 
   .nav-links a {
-    /* padding: 16px 0; */
     border-bottom: 1px solid var(--border);
     width: 100%;
   }
@@ -854,7 +903,6 @@ p, .section-body {
 
 .approach-sub {
 	display: flex;
-	/* gap: 2em; */
 	justify-content: space-between;
   flex-wrap: wrap;
 }
