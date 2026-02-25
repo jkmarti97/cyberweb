@@ -30,8 +30,9 @@ No implied rights granted.
       margin-bottom: 40px;
     }
     .module-header-text h2 {
+
       font-size: clamp(24px, 3vw, 36px);
-      font-weight: 800;
+      font-weight: 700;
       margin-bottom: 8px;
     }
     .module-header-text .module-purpose {
@@ -84,9 +85,11 @@ No implied rights granted.
     /* ── Flow diagram ── */
     .flow-section {
       padding: 64px 0;
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+      background: rgba(26, 26, 46, 0.6);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(0, 212, 255, 0.1);
+      border-bottom: 1px solid rgba(0, 212, 255, 0.1);
     }
     .flow-diagram {
       display: flex;
@@ -133,8 +136,10 @@ No implied rights granted.
 
     /* ── Traceability callout ── */
     .traceability-callout {
-      background: var(--surface);
-      border: 1px solid var(--border);
+      background: rgba(26, 26, 46, 0.6);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 212, 255, 0.15);
       border-radius: var(--radius);
       padding: 40px 48px;
       text-align: center;
@@ -145,10 +150,16 @@ No implied rights granted.
     .traceability-callout::before {
       content: '';
       position: absolute;
-      inset: -1px;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(139, 92, 246, 0.08));
       border-radius: var(--radius);
-      background: var(--surface);
-      z-index: -1;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .traceability-callout > * {
+      position: relative;
+      z-index: 1;
     }
     .traceability-callout h3 {
       font-size: 13px;

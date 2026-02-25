@@ -37,6 +37,36 @@ No implied rights granted.
       flex-direction: column;
       align-items: flex-start;
       gap: 0;
+      position: relative;
+      background: rgba(26, 26, 46, 0.65);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 212, 255, 0.15);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .team-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.06), rgba(139, 92, 246, 0.06));
+      border-radius: 12px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .team-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .team-card:hover {
+      background: rgba(26, 26, 46, 0.8);
+      border-color: rgba(0, 212, 255, 0.25);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px rgba(0, 212, 255, 0.1);
     }
 
     @media (max-width: 900px) {
@@ -151,6 +181,34 @@ No implied rights granted.
       max-height: calc( 100vh - 2em);
       display: flex;
       flex-direction: column;
+      position: relative;
+      background: rgba(26, 26, 46, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 212, 255, 0.15);
+      border-radius: 12px;
+      padding: 48px;
+      overflow: hidden;
+    }
+
+    .team-modal-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.06), rgba(139, 92, 246, 0.06));
+      border-radius: 12px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .team-modal-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .team-modal-card:hover {
+      transform: none;
+      box-shadow: none;
     }
 
     .team-modal-card.closing {
@@ -192,7 +250,7 @@ No implied rights granted.
       font-size: 14px;
       color: var(--muted);
       line-height: 1.75;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid rgba(0, 212, 255, 0.15);
       padding-top: 20px;
       margin-top: 4px;
       overflow: scroll;
