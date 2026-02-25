@@ -505,30 +505,8 @@ p, .section-body {
 }
 
 .cta-banner-inner {
-  position: relative;
-  background: rgba(26, 26, 46, 0.6);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 212, 255, 0.15);
-  border-radius: 16px;
   padding: 56px 48px;
   text-align: center;
-  overflow: hidden;
-}
-
-.cta-banner-inner::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(139, 92, 246, 0.08));
-  border-radius: 16px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.cta-banner-inner > * {
-  position: relative;
-  z-index: 1;
 }
 
 .cta-banner h2 {
@@ -692,6 +670,75 @@ p, .section-body {
 .glass:hover,
 .glass-sm:hover,
 .glass-lg:hover {
+  background: rgba(26, 26, 46, 0.75);
+  border-color: rgba(0, 212, 255, 0.25);
+  transition: all 0.3s ease;
+}
+
+/* ── Apply glass base properties to component classes ──────── */
+.module-card,
+.diff-item,
+.problem-card,
+.commitment-item,
+.team-card,
+.chain-box,
+.cta-banner-inner,
+.traceability-callout,
+.team-modal-card,
+.calendly-inline-widget,
+.calendly-placeholder,
+.contact-info-strip {
+  position: relative;
+  background: rgba(26, 26, 46, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+/* Gradient overlay for component glass elements */
+.module-card::before,
+.diff-item::before,
+.problem-card::before,
+.commitment-item::before,
+.team-card::before,
+.chain-box::before,
+.cta-banner-inner::before,
+.traceability-callout::before,
+.team-modal-card::before,
+.calendly-placeholder::before,
+.contact-info-strip::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(139, 92, 246, 0.08));
+  border-radius: var(--radius);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Content layer above overlay */
+.module-card > *,
+.diff-item > *,
+.problem-card > *,
+.commitment-item > *,
+.team-card > *,
+.chain-box > *,
+.cta-banner-inner > *,
+.traceability-callout > *,
+.team-modal-card > *,
+.calendly-placeholder > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Hover states for interactive component cards */
+.module-card:hover,
+.diff-item:hover,
+.problem-card:hover,
+.commitment-item:hover,
+.team-card:hover {
   background: rgba(26, 26, 46, 0.75);
   border-color: rgba(0, 212, 255, 0.25);
   transition: all 0.3s ease;
@@ -911,31 +958,9 @@ p, .section-body {
 }
 
 .chain-box {
-  position: relative;
-  background: rgba(26, 26, 46, 0.6);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 212, 255, 0.15);
-  border-radius: var(--radius);
   padding: 32px;
   margin-top: 2em;
   margin-bottom: 2em;
-  overflow: hidden;
-}
-
-.chain-box::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(139, 92, 246, 0.08));
-  border-radius: var(--radius);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.chain-box > * {
-  position: relative;
-  z-index: 1;
 }
 
 .chain-label {
@@ -991,38 +1016,14 @@ p, .section-body {
 
 
 .module-card {
-  position: relative;
   display: block;
   text-decoration: none;
   cursor: pointer;
   padding: 24px;
-  background: rgba(26, 26, 46, 0.6);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 212, 255, 0.15);
-  border-radius: var(--radius);
   transition: all 0.3s ease;
-  overflow: hidden;
-}
-
-.module-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(139, 92, 246, 0.08));
-  border-radius: var(--radius);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.module-card > * {
-  position: relative;
-  z-index: 1;
 }
 
 .module-card:hover {
-  background: rgba(26, 26, 46, 0.75);
-  border-color: rgba(0, 212, 255, 0.3);
   transform: translateY(-4px);
   box-shadow: 0 16px 32px rgba(0, 212, 255, 0.1);
 }
@@ -1065,36 +1066,10 @@ p, .section-body {
 }
 
 .diff-item {
-  position: relative;
   padding: 36px;
-  background: rgba(26, 26, 46, 0.6);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 212, 255, 0.15);
-  border-radius: var(--radius);
   transition: all 0.3s ease;
-  overflow: hidden;
 }
 
-.diff-item::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(139, 92, 246, 0.05));
-  border-radius: var(--radius);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.diff-item > * {
-  position: relative;
-  z-index: 1;
-}
-
-.diff-item:hover {
-  background: rgba(26, 26, 46, 0.75);
-  border-color: rgba(0, 212, 255, 0.25);
-}
 
 .diff-icon {
   margin-bottom: 20px;
@@ -1237,29 +1212,7 @@ blockquote cite {
 }
 
 .problem-card {
-  position: relative;
-  background: rgba(26, 26, 46, 0.6);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 212, 255, 0.15);
-  border-radius: var(--radius);
   padding: 28px;
-  overflow: hidden;
-}
-
-.problem-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(139, 92, 246, 0.05));
-  border-radius: var(--radius);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.problem-card > * {
-  position: relative;
-  z-index: 1;
 }
 
 .problem-card-number {
@@ -1299,28 +1252,6 @@ blockquote cite {
 
 .commitment-item {
   padding: 36px 32px;
-  background: rgba(26, 26, 46, 0.6);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 212, 255, 0.15);
-  border-radius: var(--radius);
-  position: relative;
-  overflow: hidden;
-}
-
-.commitment-item::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(139, 92, 246, 0.05));
-  border-radius: var(--radius);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.commitment-item > * {
-  position: relative;
-  z-index: 1;
 }
 
 .commitment-number {
@@ -1466,9 +1397,6 @@ blockquote cite {
 /* ── Flow diagram ── */
 .flow-section {
   padding: 64px 0;
-  background: rgba(26, 26, 46, 0.6);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   border-top: 1px solid rgba(0, 212, 255, 0.1);
   border-bottom: 1px solid rgba(0, 212, 255, 0.1);
 }
@@ -1522,31 +1450,9 @@ blockquote cite {
 
 /* ── Traceability callout ── */
 .traceability-callout {
-  background: rgba(26, 26, 46, 0.6);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 212, 255, 0.15);
-  border-radius: var(--radius);
   padding: 40px 48px;
   text-align: center;
   margin: 64px 0;
-  position: relative;
-  overflow: hidden;
-}
-
-.traceability-callout::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(139, 92, 246, 0.08));
-  border-radius: var(--radius);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.traceability-callout > * {
-  position: relative;
-  z-index: 1;
 }
 
 .traceability-callout h3 {
@@ -1625,34 +1531,10 @@ blockquote cite {
   flex-direction: column;
   align-items: flex-start;
   gap: 0;
-  position: relative;
-  background: rgba(26, 26, 46, 0.65);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 212, 255, 0.15);
-  border-radius: 12px;
   transition: all 0.3s ease;
-  overflow: hidden;
-}
-
-.team-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.06), rgba(139, 92, 246, 0.06));
-  border-radius: 12px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.team-card > * {
-  position: relative;
-  z-index: 1;
 }
 
 .team-card:hover {
-  background: rgba(26, 26, 46, 0.8);
-  border-color: rgba(0, 212, 255, 0.25);
   transform: translateY(-4px);
   box-shadow: 0 16px 32px rgba(0, 212, 255, 0.1);
 }
@@ -1753,29 +1635,7 @@ blockquote cite {
   max-height: calc(100vh - 2em);
   display: flex;
   flex-direction: column;
-  position: relative;
-  background: rgba(26, 26, 46, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(0, 212, 255, 0.15);
-  border-radius: 12px;
   padding: 48px;
-  overflow: hidden;
-}
-
-.team-modal-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.06), rgba(139, 92, 246, 0.06));
-  border-radius: 12px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.team-modal-card > * {
-  position: relative;
-  z-index: 1;
 }
 
 .team-modal-card:hover {
@@ -1890,12 +1750,7 @@ blockquote cite {
 .calendly-inline-widget {
   min-width: 280px;
   height: 700px;
-  border-radius: var(--radius);
   overflow: hidden;
-  background: rgba(26, 26, 46, 0.6);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 212, 255, 0.15);
 }
 
 .calendly-placeholder {
@@ -1904,11 +1759,6 @@ blockquote cite {
   align-items: center;
   justify-content: center;
   height: 400px;
-  background: rgba(26, 26, 46, 0.6);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 212, 255, 0.15);
-  border-radius: var(--radius);
   text-align: center;
   padding: 40px;
 }
@@ -1957,12 +1807,9 @@ blockquote cite {
 }
 
 .contact-info-strip {
-  background: rgba(26, 26, 46, 0.6);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  padding: 40px 0;
   border-top: 1px solid rgba(0, 212, 255, 0.1);
   border-bottom: 1px solid rgba(0, 212, 255, 0.1);
-  padding: 40px 0;
 }
 
 .contact-info-inner {
