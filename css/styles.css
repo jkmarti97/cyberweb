@@ -678,6 +678,7 @@ p, .section-body {
 /* ── Apply glass base properties to component classes ──────── */
 .module-card,
 .diff-item,
+.problem-bar,
 .problem-card,
 .commitment-item,
 .team-card,
@@ -700,6 +701,7 @@ p, .section-body {
 /* Gradient overlay for component glass elements */
 .module-card::before,
 .diff-item::before,
+.problem-bar::before,
 .problem-card::before,
 .commitment-item::before,
 .team-card::before,
@@ -721,6 +723,7 @@ p, .section-body {
 /* Content layer above overlay */
 .module-card > *,
 .diff-item > *,
+.problem-bar > *
 .problem-card > *,
 .commitment-item > *,
 .team-card > *,
@@ -868,9 +871,8 @@ p, .section-body {
 
 /* ── Homepage: Problem Bar ────────────────────────────────── */
 .problem-bar {
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+	margin-left: 24px;
+	margin-right: 24px;
 }
 
 .problem-grid {
