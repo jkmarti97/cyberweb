@@ -703,6 +703,39 @@ asyncSuite('CSS Files — Load & Key Rules', function() {
 });
 
 /* ══════════════════════════════════════════════════════════
+   SUITE: CSS Refactoring — No Inline Styles in Pages
+   (Ensures all page-specific styles are in css/styles.css)
+══════════════════════════════════════════════════════════ */
+asyncSuite('CSS Refactoring — Inline Styles Migrated', function() {
+  if (!isHTTP) {
+    return Promise.resolve([{
+      desc: 'Inline style audit — requires HTTP server',
+      status: 'skip',
+      detail: 'Run via python3 -m http.server 8080'
+    }]);
+  }
+
+  return Promise.all(pages.map(function(p) {
+    return fetch(p)
+      .then(function(r) { return r.text(); })
+      .then(function(html) {
+        var parser = new DOMParser();
+        var doc    = parser.parseFromString(html, 'text/html');
+        var name   = p.split('/').pop();
+        var styleBlocks = Array.from(doc.querySelectorAll('head > style'));
+
+        return {
+          desc: name + ' — no inline <style> blocks in <head> (all CSS in external files)',
+          status: assert(styleBlocks.length === 0),
+          detail: styleBlocks.length + ' inline <style> block(s) found. Move to css/styles.css'
+        };
+      });
+  })).then(function(all) {
+    return all;
+  });
+});
+
+/* ══════════════════════════════════════════════════════════
    SUITE: Live DOM checks (runs on this audit page's context)
 ══════════════════════════════════════════════════════════ */
 suite('Live DOM — CSS Variables Loaded', function(t) {

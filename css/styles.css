@@ -1141,3 +1141,816 @@ blockquote cite {
   letter-spacing: 0.05em;
   color: var(--grad-from);
 }
+
+/* ============================================================
+   ABOUT PAGE — Specific Styles
+   ============================================================ */
+
+.mission-section {
+  padding: 80px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.mission-inner {
+  display: flex;
+  gap: 64px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.mission-statement {
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+.mission-statement em {
+  font-style: normal;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.problem-section {
+  padding: 80px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.problem-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.problem-card {
+  position: relative;
+  background: rgba(26, 26, 46, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  border-radius: var(--radius);
+  padding: 28px;
+  overflow: hidden;
+}
+
+.problem-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(139, 92, 246, 0.05));
+  border-radius: var(--radius);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.problem-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.problem-card-number {
+  font-size: 48px;
+  font-weight: 800;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+.problem-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.problem-card p {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.commitments-section {
+  padding: 80px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.commitments-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 48px;
+}
+
+.commitment-item {
+  padding: 36px 32px;
+  background: rgba(26, 26, 46, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  border-radius: var(--radius);
+  position: relative;
+  overflow: hidden;
+}
+
+.commitment-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(139, 92, 246, 0.05));
+  border-radius: var(--radius);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.commitment-item > * {
+  position: relative;
+  z-index: 1;
+}
+
+.commitment-number {
+  font-size: 64px;
+  font-weight: 800;
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0.2;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.commitment-item h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.commitment-item p {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.team-cta-section {
+  padding: 80px 0;
+}
+
+.team-cta-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+/* ── About Responsive ── */
+@media (max-width: 768px) {
+  .mission-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .problem-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .commitments-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .team-cta-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ============================================================
+   SERVICES PAGE — Specific Styles
+   ============================================================ */
+
+.module-section {
+  padding: 80px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.module-section:last-of-type {
+  border-bottom: none;
+}
+
+.module-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.module-header-text h2 {
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.module-header-text .module-purpose {
+  color: var(--muted);
+  font-size: 17px;
+  max-width: 600px;
+}
+
+.module-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.module-activities h4,
+.module-outputs h4 {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.module-activities ul,
+.module-outputs ul {
+  list-style: none;
+}
+
+.module-activities ul li,
+.module-outputs ul li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 12px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.module-activities ul li::before {
+  content: '→';
+  color: var(--grad-from);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.module-outputs ul li::before {
+  content: '✓';
+  color: var(--grad-to);
+  flex-shrink: 0;
+  font-weight: 700;
+  margin-top: 1px;
+}
+
+/* ── Flow diagram ── */
+.flow-section {
+  padding: 64px 0;
+  background: rgba(26, 26, 46, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(0, 212, 255, 0.1);
+  border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+}
+
+.flow-diagram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0;
+  margin-top: 40px;
+}
+
+.flow-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.flow-node-badge {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--surface);
+}
+
+.flow-node-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  max-width: 80px;
+}
+
+.flow-connector {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  padding-bottom: 24px;
+  color: var(--grad-from);
+  font-size: 24px;
+  font-weight: 300;
+}
+
+/* ── Traceability callout ── */
+.traceability-callout {
+  background: rgba(26, 26, 46, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  border-radius: var(--radius);
+  padding: 40px 48px;
+  text-align: center;
+  margin: 64px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.traceability-callout::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(139, 92, 246, 0.08));
+  border-radius: var(--radius);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.traceability-callout > * {
+  position: relative;
+  z-index: 1;
+}
+
+.traceability-callout h3 {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.traceability-chain-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.chain-item {
+  font-size: clamp(14px, 2vw, 18px);
+  font-weight: 700;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  white-space: nowrap;
+}
+
+.chain-sep {
+  color: var(--muted);
+  margin: 0 8px;
+  font-size: 20px;
+}
+
+/* ── Services Responsive ── */
+@media (max-width: 768px) {
+  .module-body {
+    grid-template-columns: 1fr;
+  }
+
+  .flow-connector {
+    transform: rotate(90deg);
+    padding: 12px 0;
+  }
+
+  .flow-diagram {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .traceability-callout {
+    padding: 32px 24px;
+  }
+}
+
+/* ============================================================
+   TEAM PAGE — Specific Styles
+   ============================================================ */
+
+#team-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  margin-top: 64px;
+  justify-content: center;
+}
+
+.team-card {
+  flex: 0 0 calc(33.333% - 22px);
+  max-width: 360px;
+  min-width: 240px;
+  cursor: pointer;
+  padding: 28px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  position: relative;
+  background: rgba(26, 26, 46, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.team-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.06), rgba(139, 92, 246, 0.06));
+  border-radius: 12px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.team-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.team-card:hover {
+  background: rgba(26, 26, 46, 0.8);
+  border-color: rgba(0, 212, 255, 0.25);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(0, 212, 255, 0.1);
+}
+
+.team-avatar-wrap {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.team-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border);
+}
+
+.team-initials-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.team-name {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.team-title {
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 500;
+  margin-bottom: 16px;
+  letter-spacing: 0.01em;
+}
+
+.team-linkedin {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+
+.team-linkedin:hover {
+  color: var(--grad-from);
+}
+
+.team-placeholder {
+  flex: 0 0 100%;
+  text-align: center;
+  color: var(--muted);
+  font-size: 18px;
+  padding: 64px 0;
+}
+
+/* ── Modal backdrop ── */
+.team-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: backdrop-fade-in 0.3s ease forwards;
+}
+
+.team-modal-backdrop.closing {
+  animation: backdrop-fade-out 0.3s ease forwards;
+}
+
+/* Expanded card in modal */
+.team-modal-card {
+  max-width: 1200px;
+  animation: flip-reveal 0.4s ease forwards;
+  transform-origin: center center;
+  cursor: default;
+  max-height: calc(100vh - 2em);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: rgba(26, 26, 46, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  border-radius: 12px;
+  padding: 48px;
+  overflow: hidden;
+}
+
+.team-modal-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.06), rgba(139, 92, 246, 0.06));
+  border-radius: 12px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.team-modal-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.team-modal-card:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.team-modal-card.closing {
+  animation: flip-hide 0.3s ease forwards;
+}
+
+/* Modal header: avatar left, meta right */
+.team-modal-header {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+/* Avatar sizes in modal */
+.team-modal-card .team-avatar,
+.team-modal-card .team-initials-avatar {
+  width: 100px;
+  height: 100px;
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.team-modal-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+/* Title in modal has no bottom margin pushing into bio */
+.team-modal-meta .team-title {
+  margin-bottom: 8px;
+}
+
+/* Bio in expanded modal */
+.team-modal-bio {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.75;
+  border-top: 1px solid rgba(0, 212, 255, 0.15);
+  padding-top: 20px;
+  margin-top: 4px;
+  overflow: scroll;
+}
+
+/* ── Team Responsive ── */
+@media (max-width: 900px) {
+  .team-card {
+    flex: 0 0 calc(50% - 16px);
+  }
+}
+
+@media (max-width: 600px) {
+  .team-card {
+    flex: 0 0 100%;
+    max-width: 420px;
+  }
+}
+
+@media (max-width: 480px) {
+  .team-modal-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ============================================================
+   CONTACT PAGE — Specific Styles
+   ============================================================ */
+
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+  padding: 64px 0 96px;
+}
+
+.contact-form-col h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.contact-form-col .lead {
+  color: var(--muted);
+  font-size: 16px;
+  margin-bottom: 36px;
+  line-height: 1.6;
+}
+
+.contact-calendly-col h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.contact-calendly-col .lead {
+  color: var(--muted);
+  font-size: 16px;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.calendly-inline-widget {
+  min-width: 280px;
+  height: 700px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: rgba(26, 26, 46, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 212, 255, 0.15);
+}
+
+.calendly-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  background: rgba(26, 26, 46, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  border-radius: var(--radius);
+  text-align: center;
+  padding: 40px;
+}
+
+.calendly-placeholder .placeholder-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.4;
+}
+
+.calendly-placeholder p {
+  color: var(--muted);
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.calendly-placeholder code {
+  font-size: 13px;
+  color: var(--grad-from);
+  background: rgba(0, 212, 255, 0.08);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.trust-bar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding: 32px 0;
+  border-top: 1px solid var(--border);
+  margin-top: 12px;
+}
+
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.trust-item svg {
+  color: var(--grad-from);
+  flex-shrink: 0;
+}
+
+.contact-info-strip {
+  background: rgba(26, 26, 46, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(0, 212, 255, 0.1);
+  border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+  padding: 40px 0;
+}
+
+.contact-info-inner {
+  display: flex;
+  justify-content: center;
+  gap: 64px;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.contact-info-item h4 {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.contact-info-item a,
+.contact-info-item p {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.contact-info-item a:hover {
+  color: var(--grad-from);
+}
+
+/* ── Contact Responsive ── */
+@media (max-width: 768px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    padding: 48px 0 64px;
+  }
+
+  .contact-info-inner {
+    gap: 32px;
+  }
+}
