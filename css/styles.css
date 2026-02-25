@@ -20,7 +20,7 @@ No implied rights granted.
   --text:      #F0F0F5;
   --muted:     #8888A0;
   --grad-from: #00D4FF;
-  --grad-to:   #8B5CF6;
+  --grad-to:   #00D4FF;
   --gradient:  linear-gradient(135deg, var(--grad-from), var(--grad-to));
   --nav-h:     72px;
   --radius:    12px;
@@ -849,7 +849,7 @@ p, .section-body {
 
 .approach-visual {
   display: flex;
-  justify-content: center;"
+  justify-content: center;
 }
 
 .approach-sub {
