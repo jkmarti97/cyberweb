@@ -19,13 +19,12 @@ No implied rights granted.
   --border:    #2A2A3E;
   --text:      #F0F0F5;
   --muted:     #8888A0;
-  --grad-from: #00D4FF;
-  --grad-to:   #00D4FF;
-  --gradient:  linear-gradient(135deg, var(--grad-from), var(--grad-to));
+  --emphasis: #00D4FF;
+  --gradient:  linear-gradient(135deg, rgb(0, 212, 255), rgba(255, 176, 0, .2) 60%, rgb(255, 176, 0));/*linear-gradient(135deg, var(--grad-from), var(--grad-to));*/
   --nav-h:     72px;
   --radius:    12px;
   --radius-sm: 8px;
-  --transition: 0.25s ease;
+  --transition: 0.1s ease-out;
   --font-body:      'Inter', sans-serif;
 }
 
@@ -47,9 +46,10 @@ body {
 	line-height: 1.6;
 	font-size: 16px;
 	-webkit-font-smoothing: antialiased;
-	background-image: url(https://www.publicdomainpictures.net/pictures/220000/velka/black-white-background-1493966549ouS.jpg);
+	background-image: url(/assets/stockvault-smoke-on-black179950.jpg);/*url(https://www.publicdomainpictures.net/pictures/220000/velka/black-white-background-1493966549ouS.jpg);*/
 	background-size: cover;
-	background-blend-mode: difference;
+	background-blend-mode: soft-light;
+  background-position: center;
 }
 
 img {
@@ -75,6 +75,11 @@ p, .section-body {
   font-weight: 400;
 }
 
+em {
+  font-style: italic;
+  color: var(--emphasis);
+}
+
 /* ── Utility ──────────────────────────────────────────────── */
 .container {
   width: 100%;
@@ -84,7 +89,7 @@ p, .section-body {
 }
 
 .gradient-text {
-  background: var(--gradient);
+  background: var(--emphasis);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -118,7 +123,7 @@ p, .section-body {
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  background: var(--gradient);
+  background: var(--emphasis);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -232,13 +237,13 @@ p, .section-body {
 
 /* ── Keyboard focus styles (WCAG 2.4.7 / 2.4.11) ─────────── */
 :focus-visible {
-  outline: 2px solid var(--grad-from);
+  outline: 2px solid var(--emphasis);
   outline-offset: 3px;
   border-radius: 4px;
 }
 
 .btn:focus-visible {
-  outline: 2px solid var(--grad-from);
+  outline: 2px solid var(--emphasis);
   outline-offset: 3px;
 }
 
@@ -248,7 +253,7 @@ p, .section-body {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(0, 212, 255, 0.3);
-  color: var(--grad-from);
+  color: var(--emphasis);
   z-index: 1;
 }
 
@@ -272,7 +277,7 @@ p, .section-body {
 .btn-secondary:hover {
   background: rgba(26, 26, 46, 0.7);
   border-color: rgba(0, 212, 255, 0.4);
-  color: var(--grad-from);
+  color: var(--emphasis);
   transform: translateY(-2px);
 }
 
@@ -318,7 +323,7 @@ p, .section-body {
 }
 
 .nav-logo-text .brand {
-  background: var(--gradient);
+  background: var(--emphasis);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -461,9 +466,10 @@ p, .section-body {
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 40px rgba(0, 212, 255, 0.08);
-  border-color: rgba(0, 212, 255, 0.3);
+  transform: translateY(-4px)!important;
+  box-shadow: 0px 0px 20px 5px rgba(255, 176, 0, 0.2);
+  border-color: rgba(255, 176, 0, 0.3)
+  /*border-color: rgba(0, 212, 255, 0.3);*/
 }
 
 /* ── Module Badge ─────────────────────────────────────────── */
@@ -478,7 +484,7 @@ p, .section-body {
   font-size: 14px;
   font-weight: 800;
   /* Dark text: passes WCAG AA on both cyan and purple ends of gradient */
-  color: #0d0d0d;
+  color: var(--text);
   margin-bottom: 20px;
   flex-shrink: 0;
 }
@@ -622,7 +628,7 @@ p, .section-body {
 }
 
 /* ── Glassmorphism Utilities ──────────────────────────────── */
-.glass {
+/* .glass {
   background: rgba(26, 26, 46, 0.6);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -672,12 +678,13 @@ p, .section-body {
   background: rgba(26, 26, 46, 0.75);
   border-color: rgba(0, 212, 255, 0.25);
   transition: all 0.3s ease;
-}
+} */
 
 /* ── Apply glass base properties to component classes ──────── */
+.card,
 .module-card,
 .diff-item,
-.problem-bar,
+.problem-grid,
 .problem-card,
 .commitment-item,
 .team-card,
@@ -687,19 +694,20 @@ p, .section-body {
 .team-modal-card,
 .calendly-inline-widget,
 .calendly-placeholder,
-.contact-info-strip {
+.contact-info-strip,
+.glass {
   position: relative;
   background: rgba(0, 76, 91, 0.1);
   border: 1px solid rgba(0, 212, 255, 0.3);
-  box-shadow: 0px 0px 20px 5px rgba(0, 212, 255, 0.2);
-  backdrop-filter: blur(10px);
+  box-shadow: 0px 0px 10px 2px rgba(0, 212, 255, 0.3);
+  backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: var(--radius);
   overflow: hidden;
 }
 
 /* Gradient overlay for component glass elements */
-.module-card::before,
+/* .module-card::before,
 .diff-item::before,
 .problem-bar::before,
 .problem-card::before,
@@ -718,7 +726,7 @@ p, .section-body {
   border-radius: var(--radius);
   pointer-events: none;
   z-index: 0;
-}
+} */
 
 /* Content layer above overlay */
 .module-card > *,
@@ -737,7 +745,7 @@ p, .section-body {
 }
 
 /* Hover states for interactive component cards */
-.module-card:hover,
+/*.module-card:hover,
 .diff-item:hover,
 .problem-card:hover,
 .commitment-item:hover,
@@ -745,7 +753,7 @@ p, .section-body {
   background: rgba(26, 26, 46, 0.75);
   border-color: rgba(0, 212, 255, 0.25);
   transition: all 0.3s ease;
-}
+}*/
 
 /* ── Responsive ───────────────────────────────────────────── */
 @media (max-width: 768px) {
@@ -890,16 +898,12 @@ p, .section-body {
   border-right: none;
 }
 
-.problem-icon {
-  color: var(--grad-from);
-  margin-bottom: 16px;
-}
 
 .problem-item h3 {
   font-size: 18px;
   font-weight: 700;
   margin-bottom: 10px;
-  background: var(--gradient);
+  background: var(--text);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -937,11 +941,6 @@ p, .section-body {
   color: var(--text);
 }
 
-.approach-principles em {
-  font-style: italic;
-  color: var(--grad-from);
-}
-
 .check {
   color: var(--grad-from);
   font-weight: 700;
@@ -970,7 +969,7 @@ p, .section-body {
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--emphasis);
   margin-bottom: 20px;
 }
 
@@ -985,7 +984,7 @@ p, .section-body {
 .traceability-chain li {
   font-size: 14px;
   font-weight: 700;
-  background: var(--gradient);
+  background: var(--text);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1025,11 +1024,6 @@ p, .section-body {
   transition: all 0.3s ease;
 }
 
-.module-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 32px rgba(0, 212, 255, 0.1);
-}
-
 .module-card h3 {
   font-size: 16px;
   font-weight: 700;
@@ -1046,7 +1040,7 @@ p, .section-body {
 .module-link {
   font-size: 13px;
   font-weight: 600;
-  background: var(--gradient);
+  background: var(--emphasis);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1073,7 +1067,7 @@ p, .section-body {
 }
 
 
-.diff-icon {
+.diff-icon, .problem-icon {
   margin-bottom: 20px;
   width: 48px;
   height: 48px;
@@ -1082,6 +1076,12 @@ p, .section-body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.diff-icon > svg, .problem-icon > svg {
+  stroke: url("/assets/gradient.svg#g");
+  stroke-width: 2;
+  fill: none;
 }
 
 .diff-item h3 {
@@ -1361,7 +1361,7 @@ blockquote cite {
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--emphasis);
   margin-bottom: 16px;
 }
 
@@ -1430,7 +1430,7 @@ blockquote cite {
   justify-content: center;
   font-size: 16px;
   font-weight: 800;
-  color: var(--surface);
+  color: var(--text);
 }
 
 .flow-node-label {
@@ -1462,7 +1462,7 @@ blockquote cite {
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--text);
   margin-bottom: 20px;
 }
 
@@ -1477,7 +1477,7 @@ blockquote cite {
 .chain-item {
   font-size: clamp(14px, 2vw, 18px);
   font-weight: 700;
-  background: var(--gradient);
+  background: var(--emphasis);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
