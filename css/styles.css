@@ -46,7 +46,7 @@ body {
 	line-height: 1.6;
 	font-size: 16px;
 	-webkit-font-smoothing: antialiased;
-	background-image: url(/assets/stockvault-smoke-on-black179950.jpg);/*url(https://www.publicdomainpictures.net/pictures/220000/velka/black-white-background-1493966549ouS.jpg);*/
+	background-image: url(../assets/smoke.jpg);/*url(https://www.publicdomainpictures.net/pictures/220000/velka/black-white-background-1493966549ouS.jpg);*/
 	background-size: cover;
 	background-blend-mode: soft-light;
   background-position: center;
@@ -1079,7 +1079,7 @@ em {
 }
 
 .diff-icon > svg, .problem-icon > svg {
-  stroke: url("/assets/gradient.svg#g");
+  stroke: url(../assets/gradient.svg#g);
   stroke-width: 2;
   fill: none;
 }
