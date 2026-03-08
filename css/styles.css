@@ -1406,10 +1406,10 @@ blockquote cite {
 .flow-diagram {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   flex-wrap: wrap;
   gap: 0;
-  margin-top: 40px;
+  padding: 40px;
 }
 
 .flow-node {
@@ -1687,7 +1687,7 @@ blockquote cite {
   border-top: 1px solid rgba(0, 212, 255, 0.15);
   padding-top: 20px;
   margin-top: 4px;
-  overflow: scroll;
+  overflow: auto;
 }
 
 /* ── Team Responsive ── */
