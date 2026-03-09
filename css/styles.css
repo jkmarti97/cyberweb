@@ -1324,6 +1324,7 @@ blockquote cite {
 .module-section {
   padding: 80px 0;
   border-bottom: 1px solid var(--border);
+  border-top: 1px solid var(--border);
 }
 
 .module-section:last-of-type {
@@ -1394,6 +1395,10 @@ blockquote cite {
   flex-shrink: 0;
   font-weight: 700;
   margin-top: 1px;
+}
+
+.module-quote {
+  grid-column: 2 / auto;
 }
 
 /* ── Flow diagram ── */
